@@ -76,7 +76,7 @@ Estratégia: a peça fala com **marcas e estabelecimentos**. O investidor/parcei
 > • +50.000 locações
 > • +19.000 usuários cadastrados
 > • Do Aeroporto de Viracopos e do Metrô de São Paulo para os cartões-postais de Curitiba: Jardim Botânico, Rua 24 Horas, Ópera de Arame...
-> • Marcas que também se conectaram ao público com a BreZZe: Azul, Itaú, Viracopos, ViaQuatro, Neon, Teleperformance, Quicko, Consiga Mais, iCities, Vale do Pinhão e Habitat Mobilidade (Fiep/Senai, Parque Tecnológico da Indústria)
+> • Marcas que também se conectaram ao público com a BreZZe: Azul, Itaú, Viracopos, ViaQuatro, Neon, Teleperformance, Quicko, Consiga Mais, iCities, Vale do Pinhão, Habitat Mobilidade (Fiep/Senai, Parque Tecnológico da Indústria) e Inove Mais (i9+)
 >
 > Agora começamos a estruturar a distribuição em Curitiba e estamos abrindo conversas com **parceiros estratégicos**: estabelecimentos, anunciantes e quem quer fazer parte dessa expansão.
 >

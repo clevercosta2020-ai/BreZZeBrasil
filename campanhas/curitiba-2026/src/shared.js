@@ -51,6 +51,7 @@ const LOGOS = [
   ['wm', 'Azul'], ['img', 'img/logo_viracopos.png'], ['wm', 'Itaú'], ['img', 'img/logo_viaquatro.png'],
   ['img', 'img/logo_neon.png'], ['img', 'img/logo_teleperformance.png'], ['img', 'img/logo_quicko.png'], ['img', 'img/logo_consigamais.png'],
   ['img', 'img/logo_icities.png', 1.25], ['img', 'img/logo_valedopinhao.png', 1.6], ['img', 'img/logo_habitat_mobilidade.png', 1.3, true],
+  ['img', 'img/logo_inove_mais.png', 1.25, true],
 ];
 function logoItem([t, v, sc = 1, keep], h, cls = '', extra = '') {
   return t === 'wm'
@@ -61,9 +62,15 @@ function logosHTML(h) { return LOGOS.map(l => logoItem(l, h)).join(''); }
 
 // OFFICIAL QR codes only (see CLAUDE.md): WhatsApp contact + app download
 const QR = { wa: 'img/qr_wa.png', app: 'img/qr_app.png' };
-function qrPair(w, gap, cls = '', extraWa = '', extraApp = '') {
-  const lab = Math.max(11, w * 0.115), ww = w * 1.3;   // WA QR is dense: bigger card keeps it scannable
-  return `<div class="qrcard ${cls}" ${extraWa} style="width:${ww}px;padding:${ww*0.07}px;flex:none"><img src="${QR.wa}"><small style="font-size:${lab}px">Fale conosco<br>WhatsApp</small></div>
-          <div class="qrcard ${cls}" ${extraApp} style="width:${w}px;padding:${w*0.06}px;flex:none;margin-left:${gap}px"><img src="${QR.app}"><small style="font-size:${lab}px">Baixe o<br>app</small></div>`;
+// One official QR card. WA QR is dense, so its card is 1.3x larger to stay scannable.
+function qrCard(kind, w, cls = '', extra = '', pos = '') {
+  const ww = kind === 'wa' ? w * 1.3 : w, lab = Math.max(11, w * 0.115);
+  const label = kind === 'wa' ? 'Fale conosco<br>WhatsApp' : 'Baixe o<br>app';
+  return `<div class="qrcard ${cls}" ${extra} style="width:${ww}px;padding:${ww*0.07}px;${pos}"><img src="${QR[kind]}"><small style="font-size:${lab}px">${label}</small></div>`;
+}
+// The two QR codes in opposite bottom corners: WhatsApp left, app right
+function qrCorners(w, side, bottom, cls = '', exWa = '', exApp = '') {
+  return qrCard('wa', w, cls + ' abs', exWa, `left:${side}px;bottom:${bottom}px`) +
+         qrCard('app', w, cls + ' abs', exApp, `right:${side}px;bottom:${bottom}px`);
 }
 document.fonts && document.fonts.load('900 20px Montserrat');
