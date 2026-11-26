@@ -73,14 +73,25 @@ function qrCorners(w, side, bottom, cls = '', exWa = '', exApp = '') {
   return qrCard('wa', w, cls + ' abs', exWa, `left:${side}px;bottom:${bottom}px`) +
          qrCard('app', w, cls + ' abs', exApp, `right:${side}px;bottom:${bottom}px`);
 }
-// Lime battery icon. level 0..1 (video animates the .fill width via data-a="charge")
-function battSVG(level = 1, cls = '') {
-  const L = '#C6FF2E', fw = (94 * level).toFixed(1);
-  return `<svg class="batt ${cls}" viewBox="0 0 122 60" fill="none">
-    <rect x="2" y="2" width="106" height="56" rx="11" stroke="${L}" stroke-width="4"/>
-    <rect x="111" y="19" width="9" height="22" rx="3.5" fill="${L}"/>
-    <rect class="fill" x="8" y="8" width="${fw}" height="44" rx="6.5" fill="${L}"/>
-    <path d="M60 12 L44 34 H56 L52 49 L69 26 H57 Z" fill="#06223D" stroke="${L}" stroke-width="2.4" stroke-linejoin="round"/>
+// Lime battery icon. level 0..1; v=true -> standing (vertical), fill grows bottom-up.
+// The video animates .fill via data-a="batt".
+function battSVG(level = 1, cls = '', v = false) {
+  const L = '#C6FF2E';
+  if (!v) {
+    const fw = (94 * level).toFixed(1);
+    return `<svg class="batt ${cls}" viewBox="0 0 122 60" fill="none">
+      <rect x="2" y="2" width="106" height="56" rx="11" stroke="${L}" stroke-width="4"/>
+      <rect x="111" y="19" width="9" height="22" rx="3.5" fill="${L}"/>
+      <rect class="fill" x="8" y="8" width="${fw}" height="44" rx="6.5" fill="${L}"/>
+      <path d="M60 12 L44 34 H56 L52 49 L69 26 H57 Z" fill="#06223D" stroke="${L}" stroke-width="2.4" stroke-linejoin="round"/>
+    </svg>`;
+  }
+  const fh = 94 * level;
+  return `<svg class="batt ${cls}" viewBox="0 0 60 122" fill="none" data-v="1">
+    <rect x="19" y="2" width="22" height="9" rx="3.5" fill="${L}"/>
+    <rect x="2" y="14" width="56" height="106" rx="11" stroke="${L}" stroke-width="4"/>
+    <rect class="fill" x="8" y="${(114 - fh).toFixed(1)}" width="44" height="${fh.toFixed(1)}" rx="6.5" fill="${L}"/>
+    <path d="M33 47 L18 70 H29 L26 88 L42 63 H31 Z" fill="#06223D" stroke="${L}" stroke-width="2.4" stroke-linejoin="round"/>
   </svg>`;
 }
 document.fonts && document.fonts.load('900 20px Montserrat');

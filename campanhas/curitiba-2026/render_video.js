@@ -7,7 +7,7 @@ const f=process.argv[2], out=process.argv[3], FPS=30;
   await p.goto('file://'+path.resolve(__dirname,'src/video.html')+'?f='+f); await p.evaluate(()=>window.READY);
   const T=await p.evaluate(()=>window.T); const n=Math.round(T*FPS);
   const ff=spawn('ffmpeg',['-y','-loglevel','error','-f','image2pipe','-framerate',String(FPS),'-c:v','mjpeg','-i','-',
-    '-i',path.resolve(__dirname,'src/trilha.wav'),'-c:v','libx264','-preset','slow','-crf','18','-pix_fmt','yuv420p','-profile:v','high',
+    '-i',path.resolve(__dirname,'src/trilha_final.wav'),'-c:v','libx264','-preset','slow','-crf','18','-pix_fmt','yuv420p','-profile:v','high',
     '-c:a','aac','-b:a','192k','-shortest','-movflags','+faststart',out],{stdio:['pipe','inherit','inherit']});
   for(let i=0;i<n;i++){ await p.evaluate(t=>render(t),i/FPS);
     const buf=await p.screenshot({type:'jpeg',quality:95});

@@ -95,9 +95,9 @@ if (F === '1x1' || F === '4x5') {
   add(`<div class="strip" style="height:${u*11.5}px;padding:0 ${u*5}px;flex-direction:column;justify-content:center;gap:${u*1.2}px">
      <div class="logos" style="width:100%;gap:${u*.8}px">${logosHTML(u*2.5)}</div></div>`);
 }
-// fluorescent lime battery next to "24h por dia"
-const B = { '16x9': [77, 40.5, 15], '1x1': [50, 39.2, 13], '4x5': [50, 39.2, 13], '9x16': [64, 85.6, 15] }[F];
-add(`<div class="abs" style="left:${u*B[0]}px;top:${u*B[1]}px;width:${u*B[2]}px">${battSVG(1, 'glow')}</div>`);
+// fluorescent lime standing battery, placed in free space (not touching text or figures): [left, top, height] in u
+const B = { '16x9': [101, 5, 19], '1x1': [71, 43, 14.5], '4x5': [46.4, 75, 14.5], '9x16': [83, 10, 18] }[F];
+add(`<div class="abs" style="left:${u*B[0]}px;top:${u*B[1]}px;width:${u*B[2]*60/122}px">${battSVG(1, 'glow', true)}</div>`);
 stage.innerHTML = html;
 window.READY = Promise.all([document.fonts.ready, ...[...document.images].map(i => i.complete ? 1 : new Promise(r => { i.onload = i.onerror = r; }))]);
 </script></body></html>
