@@ -1,6 +1,6 @@
 # BreZZe Brasil chega a Curitiba: legendas
 
-Estratégia: a peça fala com **marcas e estabelecimentos**. O investidor/parceiro de distribuição é atraído pela prova (números, parceiros) e pelo convite "Seja um parceiro / Invista no OOH Smart", sem ser chamado diretamente.
+Estratégia: a peça fala com **marcas e estabelecimentos**. O investidor/parceiro de distribuição é atraído pela prova (números, parceiros) e pelo convite "OPORTUNIDADE! Invista no OOH Smart e no TeamWork BreZZe Brasil", sem ser chamado diretamente.
 
 ---
 
@@ -18,7 +18,7 @@ Estratégia: a peça fala com **marcas e estabelecimentos**. O investidor/parcei
 > ✅ +19.000 usuários cadastrados
 > ✅ Do Aeroporto de Viracopos e do Metrô de São Paulo para o Jardim Botânico, a Rua 24 Horas e a Ópera de Arame
 >
-> Para quem tem um estabelecimento, é mais gente entrando pela porta. Para quem enxerga longe, é um negócio pronto para crescer em Curitiba.
+> Para quem tem um estabelecimento, é mais gente entrando pela porta. Para quem enxerga longe, é um negócio pronto para crescer na Grande Curitiba.
 >
 > 🚀 OPORTUNIDADE! Invista no OOH Smart e no TeamWork BreZZe Brasil.
 > 📲 Escaneie o QR Code da imagem para falar com a gente no WhatsApp, ou baixe o app BreZZe Brasil.
@@ -28,7 +28,7 @@ Estratégia: a peça fala com **marcas e estabelecimentos**. O investidor/parcei
 **Opção B (curta)**
 
 > Curitiba, sua bateria e a sua marca nunca mais vão ficar sem energia. ⚡📍
-> +50 mil locações. +19 mil usuários. Agora em Curitiba.
+> +50 mil locações. +19 mil usuários. Agora na Grande Curitiba.
 > OPORTUNIDADE! Invista no OOH Smart e no TeamWork BreZZe Brasil. Escaneie o QR Code e fale com a gente no WhatsApp.
 > **Leve a energia com você!**
 
@@ -78,7 +78,7 @@ Estratégia: a peça fala com **marcas e estabelecimentos**. O investidor/parcei
 > • Do Aeroporto de Viracopos e do Metrô de São Paulo para os cartões-postais de Curitiba: Jardim Botânico, Rua 24 Horas, Ópera de Arame...
 > • Marcas que também se conectaram ao público com a BreZZe: Azul, Itaú, Viracopos, ViaQuatro, Neon, Teleperformance, Quicko, Consiga Mais, iCities, Vale do Pinhão, Habitat Mobilidade (Fiep/Senai, Parque Tecnológico da Indústria) e Inove Mais (i9+)
 >
-> Agora começamos a estruturar a distribuição em Curitiba e estamos abrindo conversas com **parceiros estratégicos**: estabelecimentos, anunciantes e quem quer fazer parte dessa expansão.
+> Agora começamos a estruturar a distribuição na Grande Curitiba e estamos abrindo conversas com **parceiros estratégicos**: estabelecimentos, anunciantes e quem quer fazer parte dessa expansão.
 >
 > **OPORTUNIDADE! Invista no OOH Smart e no TeamWork BreZZe Brasil.**
 > Se você enxerga oportunidade em mídia que gera utilidade real, vamos conversar: escaneie o QR Code do post (WhatsApp) ou me chame no privado. 📩
@@ -90,7 +90,7 @@ Estratégia: a peça fala com **marcas e estabelecimentos**. O investidor/parcei
 ## 5) Hashtags
 
 **Instagram (escolha 10–15):**
-#BreZZeBrasil #Curitiba #CuritibaPR #OOH #MidiaOOH #OOHSmart #MarketingDeExperiencia #QRCode #Powerbank #Inovacao #Varejo #MarketingCuritiba #NegociosCuritiba #Franquias #Oportunidade #Mobilidade #EmpreendedorismoCuritiba
+#BreZZeBrasil #Curitiba #CuritibaPR #GrandeCuritiba #OOH #MidiaOOH #OOHSmart #MarketingDeExperiencia #QRCode #Powerbank #Inovacao #Varejo #MarketingCuritiba #NegociosCuritiba #Franquias #Oportunidade #Mobilidade #EmpreendedorismoCuritiba
 
 **LinkedIn (3–5):**
 #OOH #Curitiba #Inovação #Marketing #Negócios
@@ -100,7 +100,7 @@ Estratégia: a peça fala com **marcas e estabelecimentos**. O investidor/parcei
 ## 6) Texto alternativo (acessibilidade)
 
 - **Estático:** "Prédio no centro de Curitiba com mural de araucária e a frase I ♥ Curitiba. Texto: Chegamos a Curitiba. Sua marca nas mãos da Grande Curitiba, 24h por dia. +50 mil locações, +19 mil usuários. Oportunidade: invista no OOH Smart e no TeamWork BreZZe Brasil. QR Codes para WhatsApp e download do app. Logos de marcas que também se conectaram."
-- **Vídeo:** "Vídeo de 28 segundos apresentando a chegada da BreZZe Brasil a Curitiba: powerbanks compartilhados com mídia e QR Code estratégico, números da operação, marcas parceiras e convite para ser parceiro."
+- **Vídeo:** "Vídeo de 28 segundos apresentando a chegada da BreZZe Brasil a Curitiba: powerbanks compartilhados com mídia e QR Code estratégico, números da operação, marcas parceiras e convite para investir no OOH Smart."
 
 ## 7) Primeiro comentário (fixar)
 

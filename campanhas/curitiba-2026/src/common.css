@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800;900&display=block');
 :root{
-  --navy:#06223D; --navy2:#0B3558; --blue:#1E7FCB; --cyan:#3CCBF4; --ice:#E8F6FD; --white:#fff;
+  --navy:#06223D; --navy2:#0B3558; --blue:#1E7FCB; --cyan:#3CCBF4; --ice:#E8F6FD; --lime:#C6FF2E; --white:#fff;
   --grad:linear-gradient(135deg,#3CCBF4 0%,#1E7FCB 55%,#2453C7 100%);
 }
 *{box-sizing:border-box;margin:0;padding:0}
@@ -29,3 +29,6 @@ body{font-family:'Montserrat',sans-serif;color:#fff;-webkit-font-smoothing:antia
 .qrcard img{display:block;width:100%;border-radius:calc(var(--u)*.8)}
 .qrcard small{display:block;font-weight:800;letter-spacing:.08em;text-transform:uppercase;margin-top:calc(var(--u)*1);font-size:calc(var(--u)*1.5)}
 .waves path{fill:none;stroke:url(#wg);stroke-width:1}
+.batt{overflow:visible}
+.batt.glow{filter:drop-shadow(0 0 calc(var(--u)*1.2) rgba(198,255,46,.85)) drop-shadow(0 0 calc(var(--u)*3) rgba(198,255,46,.45))}
+.lime{color:var(--lime)!important}

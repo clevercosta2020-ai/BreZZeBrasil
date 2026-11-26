@@ -18,7 +18,7 @@
 .statbig b{display:block;font-weight:900;line-height:1;letter-spacing:-.03em}
 .statbig b span{display:inline!important;margin:0!important;opacity:1!important}
 .statbig > span{display:block;font-weight:600;opacity:.9;margin-top:.3em}
-.bar{position:absolute;left:0;bottom:0;height:calc(var(--u)*.8);background:var(--grad)}
+.bar{position:absolute;left:0;bottom:0;height:calc(var(--u)*.8);background:linear-gradient(90deg,#3CCBF4,#C6FF2E);box-shadow:0 0 calc(var(--u)*1.5) rgba(198,255,46,.6)}
 .logogrid{display:flex;flex-wrap:wrap;justify-content:center;align-items:center}
 .logogrid .slot{display:flex;justify-content:center;align-items:center}
 .logogrid img{filter:brightness(0) invert(1);object-fit:contain}
@@ -50,12 +50,13 @@ h += `<div class="scene" data-s="0" data-e="4.4">
 
 // ---------- SCENE 2 (4.2–9): brand + Curitiba ----------
 h += `<div class="scene" data-s="4.2" data-e="9" style="background:radial-gradient(ellipse at 50% 35%,#0E4A7A 0%,#06223D 70%)">
+  <div id="batt2" class="abs a" data-a="batt" data-t="4.4" data-d="3.8" style="opacity:0">${battSVG(0)}</div>
   <div class="wv a" data-a="fade" data-t="4.3" style="left:-10%;width:120%;top:${s(58,55,52)}%;height:${s(26,32,40)}%">${waves(34,1600,400,80,0)}</div>
   <div class="center">
     <div class="a" data-a="draw" data-t="4.4" data-d="2.2" style="width:${u*s(34,26,26)}px;opacity:.95">${CWB}</div>
-    <img class="a" data-a="pop" data-t="5.6" src="img/brezze_logo.png" style="width:${u*s(70,54,52)}px;margin-top:${u*4}px">
+    <img id="logo2" class="a" data-a="pop" data-t="5.6" src="img/brezze_logo.png" style="width:${u*s(70,54,52)}px;margin-top:${u*4}px">
     <div class="a" data-a="up" data-t="6.4" style="margin-top:${u*4}px"><span class="pill" style="font-size:${u*s(3.4,2.8,2.6)}px">${ICON.pin} Chega a Curitiba</span></div>
-    <div class="a" data-a="up" data-t="7.1" style="margin-top:${u*3}px;font-weight:800;font-style:italic;font-size:${u*s(4.6,3.8,3.6)}px">Leve a energia com você!</div>
+    <div class="a" data-a="up" data-t="7.1" id="tag2" style="margin-top:${u*3}px;font-weight:800;font-style:italic;font-size:${u*s(4.6,3.8,3.6)}px">Leve a energia com você!</div>
   </div></div>`;
 
 // ---------- SCENE 3 (8.8–14): proof numbers ----------
@@ -110,7 +111,7 @@ h += `<div class="scene" data-s="23.2" data-e="28.5">
   <div class="shade" style="background:${L?'linear-gradient(270deg,#06223D 38%,rgba(6,34,61,.6) 65%,rgba(6,34,61,.25))':'linear-gradient(180deg,rgba(6,34,61,.35),rgba(6,34,61,.9) 45%,#06223D 70%)'}"></div>
   <div class="abs" style="${L?`right:${u*9}px;top:${u*8}px;width:${u*80}px`:`left:${u*8}px;right:${u*8}px;bottom:${u*s(37,31,0)}px`}">
     <img class="a" data-a="up" data-t="23.5" src="img/brezze_logo.png" style="height:${u*s(8,6.5,7)}px">
-    <div class="kicker a" data-a="pop" data-t="23.8" style="font-size:${u*s(3.6,3,2.8)}px;margin-top:${u*4}px">Oportunidade!</div>
+    <div class="kicker a" data-a="pop" data-t="23.8" style="color:var(--lime);font-size:${u*s(3.6,3,2.8)}px;margin-top:${u*4}px">Oportunidade!</div>
     <div class="big" style="font-size:${u*s(9,7.4,7.4)}px;margin-top:${u*1.4}px">
       <span class="line a" data-a="up" data-t="24.05">Invista no</span>
       <span class="line a accent" data-a="up" data-t="24.3">OOH Smart.</span></div>
@@ -123,6 +124,11 @@ h += `<div class="scene" data-s="23.2" data-e="28.5">
 h += `<div class="bar" id="bar"></div>`;
 stage.innerHTML = h;
 
+// fit the scene-2 battery around logo + pill + tagline (measured before any transform)
+const fitBatt = () => { const L2 = document.getElementById('logo2'), T2 = document.getElementById('tag2'), keep = [L2.style.transform, T2.style.transform]; L2.style.transform = T2.style.transform = 'none';
+  const sr = stage.getBoundingClientRect(), l = L2.getBoundingClientRect(), g = T2.getBoundingClientRect(); L2.style.transform = keep[0]; T2.style.transform = keep[1];
+  const top = l.top - sr.top - u * 5, bot = g.bottom - sr.top + u * 4, h = bot - top, w = h * 122 / 60;
+  const b = document.getElementById('batt2'); Object.assign(b.style, { left: (W - w * 0.93) / 2 + 'px', top: top + 'px', width: w + 'px' }); };
 // measure CWB path lengths
 document.querySelectorAll('.cwb path,.cwb circle').forEach(p => { const l = p.getTotalLength ? p.getTotalLength() : 300; p.style.setProperty('--len', l); });
 
@@ -149,6 +155,7 @@ window.render = t => {
       case 'up': el.style.opacity = k; el.style.transform = `translateY(${(1 - k) * u * 4}px)`; break;
       case 'left': el.style.opacity = k; el.style.transform = `translateX(${(1 - k) * -u * 8}px)`; break;
       case 'fade': el.style.opacity = k; break;
+      case 'batt': { el.style.opacity = .42 * clamp((t - t0) / .4); const f = el.querySelector('.fill'); f.setAttribute('width', (94 * eo(p)).toFixed(1)); break; }
       case 'pop': el.style.opacity = clamp(p * 2); el.style.transform = `scale(${.6 + .4 * eback(p)})`; break;
       case 'draw': el.querySelectorAll('path,circle').forEach((pth, i, all) => {
           const l = +pth.style.getPropertyValue('--len'); const q = eo(clamp(p * 1.4 - i / all.length * .4));
@@ -159,6 +166,6 @@ window.render = t => {
   document.getElementById('bar').style.width = (t / T * 100) + '%';
 };
 window.T = T;
-window.READY = Promise.all([document.fonts.ready, ...[...document.images].map(i => i.complete ? 1 : new Promise(r => { i.onload = i.onerror = r; }))]);
+window.READY = Promise.all([document.fonts.ready, ...[...document.images].map(i => i.complete ? 1 : new Promise(r => { i.onload = i.onerror = r; }))]).then(() => { fitBatt(); render(window.__t || 0); });
 const qt = new URLSearchParams(location.search).get('t'); render(qt ? +qt : 0);
 </script></body></html>

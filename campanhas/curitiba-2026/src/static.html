@@ -48,7 +48,7 @@ if (F === '16x9') {
     <div class="stat"><b style="font-size:${u*5.6}px">+19 mil</b><span style="font-size:${u*1.9}px">usuários cadastrados</span></div>
     <div class="stat"><b style="font-size:${u*5.6}px">24h</b><span style="font-size:${u*1.9}px">sua marca em movimento</span></div></div>`);
   add(`<div class="abs" style="left:0;right:0;bottom:${u*13.5}px;display:flex;justify-content:center"><div style="text-align:center;padding:${u*2}px ${u*3.5}px;border-radius:${u*2.5}px;background:rgba(6,34,61,.78);backdrop-filter:blur(8px);border:1px solid rgba(60,203,244,.4)">
-     <div style="font-weight:900;letter-spacing:.2em;text-transform:uppercase;color:var(--cyan);font-size:${u*2}px">Oportunidade!</div>
+     <div style="font-weight:900;letter-spacing:.2em;text-transform:uppercase;color:var(--lime);font-size:${u*2}px">Oportunidade!</div>
      <div style="font-weight:900;font-size:${u*4.4}px;line-height:1.05;margin-top:${u*.8}px;white-space:nowrap">Invista no OOH Smart</div>
      <div style="font-weight:600;font-size:${u*2.3}px;margin-top:${u*1}px">Invista no TeamWork BreZZe Brasil.</div><div class="tag" style="font-size:${u*2.2}px;margin-top:${u*1.2}px">Leve a energia com você!</div></div></div>`);
   add(qrCorners(u*14, u*7, u*12.8));
@@ -68,7 +68,7 @@ if (F === '9x16') {
     <div class="stat"><b style="font-size:${u*8}px">+19 mil</b><span style="font-size:${u*2.7}px">usuários cadastrados</span></div></div>`);
   add(qrCorners(u*14.5, u*6, u*4));
   add(`<div class="abs" style="left:${u*28}px;right:${u*23}px;bottom:${u*6}px;text-align:center">
-     <div style="font-weight:900;letter-spacing:.2em;text-transform:uppercase;color:var(--cyan);font-size:${u*2.4}px">Oportunidade!</div>
+     <div style="font-weight:900;letter-spacing:.2em;text-transform:uppercase;color:var(--lime);font-size:${u*2.4}px">Oportunidade!</div>
      <div style="font-weight:900;font-size:${u*4.4}px;line-height:1.05;margin-top:${u*.8}px;">Invista no OOH Smart</div>
      <div style="font-weight:600;font-size:${u*2.5}px;margin-top:${u*1}px">Invista no TeamWork BreZZe Brasil.</div><div class="tag" style="font-size:${u*2.6}px;margin-top:${u*1.4}px">Leve a energia com você!</div></div>`);
   add(`<div class="abs" style="left:${u*5}px;right:${u*5}px;top:${H*.748}px;border-top:1px solid rgba(60,203,244,.3);border-bottom:1px solid rgba(60,203,244,.3);padding:${u*1.4}px 0">
@@ -89,12 +89,15 @@ if (F === '1x1' || F === '4x5') {
     <div class="stat"><b style="font-size:${u*6}px">+19 mil</b><span style="font-size:${u*2}px">usuários</span></div></div>`);
   add(qrCorners(u*13, u*5, u*13.5));
   add(`<div class="abs" style="left:${u*26}px;right:${u*19}px;bottom:${u*14}px;text-align:center">
-     <div style="font-weight:900;letter-spacing:.2em;color:var(--cyan);font-size:${u*1.9}px">OPORTUNIDADE!</div>
+     <div style="font-weight:900;letter-spacing:.2em;color:var(--lime);font-size:${u*1.9}px">OPORTUNIDADE!</div>
      <div class="btn" style="font-size:${u*2.5}px;margin-top:${u*1.2}px">Invista no OOH Smart ${ICON.arrow}</div>
      <div style="font-weight:600;font-size:${u*2}px;margin-top:${u*1.4}px">Invista no TeamWork BreZZe Brasil.</div></div>`);
   add(`<div class="strip" style="height:${u*11.5}px;padding:0 ${u*5}px;flex-direction:column;justify-content:center;gap:${u*1.2}px">
      <div class="logos" style="width:100%;gap:${u*.8}px">${logosHTML(u*2.5)}</div></div>`);
 }
+// fluorescent lime battery next to "24h por dia"
+const B = { '16x9': [77, 40.5, 15], '1x1': [50, 39.2, 13], '4x5': [50, 39.2, 13], '9x16': [64, 85.6, 15] }[F];
+add(`<div class="abs" style="left:${u*B[0]}px;top:${u*B[1]}px;width:${u*B[2]}px">${battSVG(1, 'glow')}</div>`);
 stage.innerHTML = html;
 window.READY = Promise.all([document.fonts.ready, ...[...document.images].map(i => i.complete ? 1 : new Promise(r => { i.onload = i.onerror = r; }))]);
 </script></body></html>
