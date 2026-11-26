@@ -1,0 +1,31 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800;900&display=block');
+:root{
+  --navy:#06223D; --navy2:#0B3558; --blue:#1E7FCB; --cyan:#3CCBF4; --ice:#E8F6FD; --white:#fff;
+  --grad:linear-gradient(135deg,#3CCBF4 0%,#1E7FCB 55%,#2453C7 100%);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--navy);overflow:hidden}
+body{font-family:'Montserrat',sans-serif;color:#fff;-webkit-font-smoothing:antialiased}
+#stage{position:relative;overflow:hidden;background:var(--navy)}
+.abs{position:absolute}
+.cover{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.accent{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.cy{color:var(--cyan)}
+.pill{display:inline-flex;align-items:center;gap:calc(var(--u)*1.2);padding:calc(var(--u)*1.1) calc(var(--u)*2.4);
+  border-radius:999px;background:rgba(60,203,244,.14);border:calc(var(--u)*.22) solid rgba(60,203,244,.6);
+  font-weight:800;letter-spacing:.14em;text-transform:uppercase;font-size:calc(var(--u)*2.2);color:#fff;backdrop-filter:blur(6px)}
+.pill svg{width:calc(var(--u)*2.6);height:calc(var(--u)*2.6)}
+.btn{display:inline-flex;align-items:center;gap:calc(var(--u)*1.4);background:var(--grad);color:#fff;font-weight:800;
+  border-radius:999px;padding:calc(var(--u)*1.8) calc(var(--u)*3.4);font-size:calc(var(--u)*2.6);
+  box-shadow:0 calc(var(--u)*1) calc(var(--u)*4) rgba(30,127,203,.55)}
+.btn svg{width:calc(var(--u)*2.6);height:calc(var(--u)*2.6)}
+.stat b{display:block;font-weight:900;line-height:1;letter-spacing:-.02em}
+.stat span{display:block;font-weight:600;opacity:.85;line-height:1.2;margin-top:calc(var(--u)*.8)}
+.logos{display:flex;align-items:center;justify-content:space-around;gap:calc(var(--u)*2)}
+.logos img{filter:brightness(0) invert(1);opacity:.92;object-fit:contain}
+.logos .wm{font-weight:900;color:#fff;opacity:.92;letter-spacing:-.02em;line-height:1}
+.qrcard{background:#fff;border-radius:calc(var(--u)*2.4);padding:calc(var(--u)*1.6);color:var(--navy);
+  box-shadow:0 calc(var(--u)*2) calc(var(--u)*6) rgba(0,0,0,.35);text-align:center}
+.qrcard img{display:block;width:100%;border-radius:calc(var(--u)*.8)}
+.qrcard small{display:block;font-weight:800;letter-spacing:.08em;text-transform:uppercase;margin-top:calc(var(--u)*1);font-size:calc(var(--u)*1.5)}
+.waves path{fill:none;stroke:url(#wg);stroke-width:1}

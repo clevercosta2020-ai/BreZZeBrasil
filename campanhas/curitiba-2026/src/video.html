@@ -1,0 +1,165 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><title>BreZZe Curitiba — Vídeo</title>
+<link rel="stylesheet" href="common.css">
+<style>
+.scene{position:absolute;inset:0;overflow:hidden;opacity:0}
+.scene .bgimg{position:absolute;inset:-2%;width:104%;height:104%;object-fit:cover;transform-origin:50% 40%}
+.shade{position:absolute;inset:0}
+.center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+.a{will-change:transform,opacity}
+.big{font-weight:900;line-height:1.03;letter-spacing:-.025em}
+.kicker{font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:var(--cyan)}
+.line{display:block;white-space:nowrap}
+.wv{position:absolute;opacity:.6}
+.wv svg{width:100%;height:100%}
+.cwb path,.cwb circle{stroke-dasharray:var(--len);stroke-dashoffset:var(--len)}
+.chip{display:inline-flex;align-items:center;gap:.6em;background:rgba(255,255,255,.1);border:1px solid rgba(60,203,244,.55);
+  border-radius:999px;padding:.55em 1.1em;font-weight:700;backdrop-filter:blur(6px)}
+.chip i{width:.55em;height:.55em;border-radius:50%;background:var(--cyan);display:inline-block}
+.statbig b{display:block;font-weight:900;line-height:1;letter-spacing:-.03em}
+.statbig b span{display:inline!important;margin:0!important;opacity:1!important}
+.statbig > span{display:block;font-weight:600;opacity:.9;margin-top:.3em}
+.bar{position:absolute;left:0;bottom:0;height:calc(var(--u)*.8);background:var(--grad)}
+.logogrid{display:grid;align-items:center;justify-items:center}
+.logogrid img{filter:brightness(0) invert(1);object-fit:contain}
+.logogrid .wm{font-weight:900;letter-spacing:-.02em;line-height:1}
+.logogrid.two > :last-child:nth-child(odd){grid-column:1/-1}
+.scan{position:absolute;left:6%;right:6%;height:3px;background:var(--cyan);box-shadow:0 0 18px 4px rgba(60,203,244,.8)}
+</style></head><body>
+<div id="stage"></div>
+<script src="shared.js"></script>
+<script>
+const u = Math.min(W, H) / 100;
+const V = F === '9x16', L = F === '16x9';
+const s = (a, b, c) => V ? a : (L ? c : b);           // pick by format: (vertical, square, landscape)
+const T = 28;                                          // duration (s)
+let h = '';
+
+// ---------- SCENE 1 (0–4.4): hook question ----------
+h += `<div class="scene" data-s="0" data-e="4.4">
+  <img class="bgimg kb" src="img/ph_man_paulista.jpg" style="object-position:${s('62% 50%','55% 50%','50% 40%')}">
+  <div class="shade" style="background:linear-gradient(${s('180deg','180deg','90deg')},rgba(6,34,61,.55),rgba(6,34,61,.92))"></div>
+  <div class="center" style="padding:0 ${u*8}px;${L?'align-items:flex-start;text-align:left;padding-left:'+u*10+'px':''}">
+    <div class="kicker a" data-a="up" data-t=".2" style="font-size:${u*s(3,2.6,2.4)}px;margin-bottom:${u*3}px">Para marcas e estabelecimentos</div>
+    <div class="big" style="font-size:${u*s(7.8,7.2,8.6)}px;max-width:${L?u*110:u*92}px">
+      <span class="line a" data-a="up" data-t=".5">Como colocar</span>
+      <span class="line a" data-a="up" data-t=".8">sua marca nas mãos</span>
+      <span class="line a" data-a="up" data-t="1.1">da população,</span>
+      <span class="line a accent" data-a="pop" data-t="1.7">24h por dia?</span>
+    </div>
+  </div></div>`;
+
+// ---------- SCENE 2 (4.2–9): brand + Curitiba ----------
+h += `<div class="scene" data-s="4.2" data-e="9" style="background:radial-gradient(ellipse at 50% 35%,#0E4A7A 0%,#06223D 70%)">
+  <div class="wv a" data-a="fade" data-t="4.3" style="left:-10%;width:120%;top:${s(58,55,52)}%;height:${s(26,32,40)}%">${waves(34,1600,400,80,0)}</div>
+  <div class="center">
+    <div class="a" data-a="draw" data-t="4.4" data-d="2.2" style="width:${u*s(62,48,44)}px;opacity:.9">${CWB}</div>
+    <img class="a" data-a="pop" data-t="5.6" src="img/brezze_logo.png" style="width:${u*s(70,54,52)}px;margin-top:${u*4}px">
+    <div class="a" data-a="up" data-t="6.4" style="margin-top:${u*4}px"><span class="pill" style="font-size:${u*s(3.4,2.8,2.6)}px">${ICON.pin} Chega a Curitiba</span></div>
+    <div class="a" data-a="up" data-t="7.1" style="margin-top:${u*3}px;font-weight:800;font-style:italic;font-size:${u*s(4.6,3.8,3.6)}px">Leve a energia com você!</div>
+  </div></div>`;
+
+// ---------- SCENE 3 (8.8–14): proof numbers ----------
+h += `<div class="scene" data-s="8.8" data-e="14">
+  <img class="bgimg kb" src="img/ph_woman_kiosk.jpg" style="object-position:${s('40% 30%','40% 30%','50% 30%')}">
+  <div class="shade" style="background:${L?'linear-gradient(90deg,#06223D 30%,rgba(6,34,61,.55) 60%,rgba(6,34,61,.15))':'linear-gradient(180deg,rgba(6,34,61,.2) 10%,rgba(6,34,61,.88) 48%,#06223D 75%)'}"></div>
+  <div class="abs" style="${L?`left:${u*10}px;top:${u*14}px;width:${u*80}px`:`left:${u*8}px;right:${u*8}px;bottom:${u*s(16,8,0)}px`}">
+    <div class="kicker a" data-a="up" data-t="9.1" style="font-size:${u*s(3,2.4,2.4)}px;margin-bottom:${u*3}px">Operação comprovada</div>
+    <div style="display:flex;gap:${u*6}px;${V?'flex-direction:column;gap:'+u*4+'px':''}">
+      <div class="statbig a" data-a="up" data-t="9.4"><b style="font-size:${u*s(15,12,11)}px">+<span class="count" data-to="50000" data-t="9.4" data-d="1.6">0</span></b><span style="font-size:${u*s(3.8,3,2.8)}px">locações realizadas</span></div>
+      <div class="statbig a" data-a="up" data-t="10.2"><b class="accent" style="font-size:${u*s(15,12,11)}px">+<span class="count" data-to="19000" data-t="10.2" data-d="1.6">0</span></b><span style="font-size:${u*s(3.8,3,2.8)}px">usuários cadastrados</span></div>
+    </div>
+    <div class="a" data-a="up" data-t="11.6" style="margin-top:${u*4}px;font-weight:600;font-size:${u*s(3.4,2.7,2.5)}px;line-height:1.4;opacity:.95">
+      No Aeroporto de <b>Viracopos</b> e no <b>Metrô Linha 4-Amarela</b> de São Paulo.</div>
+  </div></div>`;
+
+// ---------- SCENE 4 (13.8–19.6): QR code strategy ----------
+h += `<div class="scene" data-s="13.8" data-e="19.6">
+  <img class="bgimg kb" src="img/ph_kiosk_hands.jpg" style="object-position:50% 50%">
+  <div class="shade" style="background:rgba(6,34,61,.86)"></div>
+  <div class="abs" style="${L?`left:${u*10}px;top:${u*16}px;width:${u*90}px`:`left:${u*8}px;right:${u*8}px;top:${u*s(22,9,0)}px`}">
+    <div class="big" style="font-size:${u*s(7.6,6.4,6.6)}px">
+      <span class="line a" data-a="up" data-t="14.1">Como atrair mais</span>
+      <span class="line a" data-a="up" data-t="14.35">clientes para o seu</span>
+      <span class="line a" data-a="up" data-t="14.6">estabelecimento?</span></div>
+    <div class="kicker a" data-a="up" data-t="15.6" style="font-size:${u*s(3.6,3,2.8)}px;margin-top:${u*5}px">QR Code Estratégico</div>
+    <div style="display:flex;flex-direction:column;align-items:flex-start;gap:${u*2}px;margin-top:${u*2.6}px;font-size:${u*s(3.6,2.9,2.7)}px">
+      <span class="chip a" data-a="left" data-t="16.1"><i></i>Sua mensagem</span>
+      <span class="chip a" data-a="left" data-t="16.5"><i></i>Seu lead form</span>
+      <span class="chip a" data-a="left" data-t="16.9"><i></i>Sua experiência ao cliente</span></div>
+  </div>
+  <div class="abs a" data-a="pop" data-t="15.2" style="${L?`right:${u*12}px;top:${u*22}px`:(V?`left:50%;margin-left:-${u*22}px;bottom:${u*12}px`:`right:${u*7}px;bottom:${u*9}px`)}">
+    <div style="position:relative;width:${u*s(44,30,44)}px">
+      <img src="img/phone_battery.png" style="width:100%;filter:drop-shadow(0 ${u}px ${u*4}px rgba(0,0,0,.5))">
+    </div></div>
+</div>`;
+
+// ---------- SCENE 5 (19.4–23.4): partners ----------
+const cols = s(2, 4, 6);
+h += `<div class="scene" data-s="19.4" data-e="23.4" style="background:radial-gradient(ellipse at 50% 40%,#0E4A7A 0%,#06223D 72%)">
+  <div class="wv" style="left:-10%;width:120%;top:62%;height:30%">${waves(30,1600,400,70,1.6)}</div>
+  <div class="center" style="padding:0 ${u*7}px">
+    <div class="kicker a" data-a="up" data-t="19.6" style="font-size:${u*s(3.2,2.6,2.4)}px">Marcas que também se conectaram</div>
+    <div class="big a" data-a="up" data-t="19.8" style="font-size:${u*s(7,6,5.6)}px;margin:${u*2}px 0 ${u*6}px">ao público com a BreZZe</div>
+    <div class="logogrid ${cols===2?'two':''}" style="grid-template-columns:repeat(${cols},1fr);gap:${u*s(6,5,5)}px ${u*s(5,6,6)}px;width:100%">
+      ${LOGOS.map((l, i) => logoItem(l, u * s(7.4, 5, 5.2), 'a', `data-a="pop" data-t="${(20.2 + i * .14).toFixed(2)}"`)).join('')}
+    </div></div></div>`;
+
+// ---------- SCENE 6 (23.2–28): CTA ----------
+h += `<div class="scene" data-s="23.2" data-e="28.5">
+  <img class="bgimg kb" src="img/ph_woman_battery.jpg" style="object-position:${s('30% 50%','35% 50%','30% 40%')}">
+  <div class="shade" style="background:${L?'linear-gradient(270deg,#06223D 38%,rgba(6,34,61,.6) 65%,rgba(6,34,61,.25))':'linear-gradient(180deg,rgba(6,34,61,.35),rgba(6,34,61,.9) 45%,#06223D 70%)'}"></div>
+  <div class="abs" style="${L?`right:${u*9}px;top:${u*8}px;width:${u*80}px`:`left:${u*8}px;right:${u*8}px;bottom:${u*s(10,5,0)}px`}">
+    <img class="a" data-a="up" data-t="23.5" src="img/brezze_logo.png" style="height:${u*s(8,6.5,7)}px">
+    <div class="kicker a" data-a="pop" data-t="23.8" style="font-size:${u*s(3.6,3,2.8)}px;margin-top:${u*4}px">Oportunidade!</div>
+    <div class="big" style="font-size:${u*s(9,7.4,7.4)}px;margin-top:${u*1.4}px">
+      <span class="line a" data-a="up" data-t="24.05">Invista no</span>
+      <span class="line a accent" data-a="up" data-t="24.3">OOH Smart.</span></div>
+    <div class="a" data-a="up" data-t="24.8" style="font-weight:600;font-size:${u*s(4,3.2,3)}px;margin-top:${u*2.4}px;line-height:1.35">Faça parte do nosso <b class="cy">teamwork</b> e leve<br>a BreZZe Brasil a Curitiba inteira.</div>
+    <div style="display:flex;align-items:flex-start;margin-top:${u*4.4}px">
+      ${qrPair(u*s(20,14.5,14), u*3, 'a', 'data-a="pop" data-t="25.3"', 'data-a="pop" data-t="25.6"')}
+    </div>
+    <div class="a" data-a="up" data-t="26.1" style="font-weight:800;font-style:italic;margin-top:${u*3}px;font-size:${u*s(3.8,3,2.8)}px">Leve a energia com você!</div>
+    </div></div></div>`;
+
+h += `<div class="bar" id="bar"></div>`;
+stage.innerHTML = h;
+
+// measure CWB path lengths
+document.querySelectorAll('.cwb path,.cwb circle').forEach(p => { const l = p.getTotalLength ? p.getTotalLength() : 300; p.style.setProperty('--len', l); });
+
+// ---------- timeline renderer ----------
+const clamp = x => Math.max(0, Math.min(1, x));
+const eo = x => 1 - Math.pow(1 - x, 3);
+const eback = x => { const c = 1.7; return 1 + (c + 1) * Math.pow(x - 1, 3) + c * Math.pow(x - 1, 2); };
+const scenes = [...document.querySelectorAll('.scene')];
+const anims = [...document.querySelectorAll('.a')];
+const counts = [...document.querySelectorAll('.count')];
+const fmt = n => n.toLocaleString('pt-BR');
+window.render = t => {
+  scenes.forEach(sc => {
+    const a = +sc.dataset.s, e = +sc.dataset.e, X = .45;
+    const o = clamp((t - a) / X) * clamp((e - t) / X);
+    sc.style.opacity = (a === 0 && t < X) ? 1 : o;
+    sc.style.visibility = o > 0 || (a === 0 && t < X) ? 'visible' : 'hidden';
+    const bg = sc.querySelector('.kb');
+    if (bg) { const p = clamp((t - a) / (e - a)); bg.style.transform = `scale(${1.12 - .1 * p}) translateY(${(1 - p) * u}px)`; }
+  });
+  anims.forEach(el => {
+    const t0 = +el.dataset.t, d = +(el.dataset.d || .6), p = clamp((t - t0) / d), k = eo(p);
+    switch (el.dataset.a) {
+      case 'up': el.style.opacity = k; el.style.transform = `translateY(${(1 - k) * u * 4}px)`; break;
+      case 'left': el.style.opacity = k; el.style.transform = `translateX(${(1 - k) * -u * 8}px)`; break;
+      case 'fade': el.style.opacity = k; break;
+      case 'pop': el.style.opacity = clamp(p * 2); el.style.transform = `scale(${.6 + .4 * eback(p)})`; break;
+      case 'draw': el.querySelectorAll('path,circle').forEach((pth, i, all) => {
+          const l = +pth.style.getPropertyValue('--len'); const q = eo(clamp(p * 1.4 - i / all.length * .4));
+          pth.style.strokeDashoffset = l * (1 - q); }); break;
+    }
+  });
+  counts.forEach(c => { const p = eo(clamp((t - +c.dataset.t) / +c.dataset.d)); c.textContent = fmt(Math.round(+c.dataset.to * p / 100) * 100); });
+  document.getElementById('bar').style.width = (t / T * 100) + '%';
+};
+window.T = T;
+window.READY = Promise.all([document.fonts.ready, ...[...document.images].map(i => i.complete ? 1 : new Promise(r => { i.onload = i.onerror = r; }))]);
+const qt = new URLSearchParams(location.search).get('t'); render(qt ? +qt : 0);
+</script></body></html>
