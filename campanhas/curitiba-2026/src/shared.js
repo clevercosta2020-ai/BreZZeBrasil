@@ -50,8 +50,8 @@ ${P.join('')}
 const LOGOS = [
   ['wm', 'Azul'], ['img', 'img/logo_viracopos.png'], ['wm', 'Itaú'], ['img', 'img/logo_viaquatro.png'],
   ['img', 'img/logo_neon.png'], ['img', 'img/logo_teleperformance.png'], ['img', 'img/logo_quicko.png'], ['img', 'img/logo_consigamais.png'],
-  ['img', 'img/logo_icities.png', 1.25], ['img', 'img/logo_valedopinhao.png', 1.6], ['img', 'img/logo_habitat_mobilidade.png', 1.3, true],
-  ['img', 'img/logo_inove_mais.png', 1.25, true],
+  ['img', 'img/logo_icities.png', 1.25], ['img', 'img/logo_valedopinhao.png', 1.6], ['img', 'img/logo_habitat_mobilidade.png', 1.3],
+  ['img', 'img/logo_inove_mais.png', 1.25],
 ];
 function logoItem([t, v, sc = 1, keep], h, cls = '', extra = '') {
   return t === 'wm'

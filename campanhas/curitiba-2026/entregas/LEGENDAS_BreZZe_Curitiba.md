@@ -49,7 +49,7 @@ Estratégia: a peça fala com **marcas e estabelecimentos**. O investidor/parcei
 >
 > **Leve a energia com você!**
 
-**Texto da capa do Reels:** "Sua marca nas mãos de Curitiba. 24h por dia."
+**Texto da capa do Reels:** "Sua marca nas mãos da Grande Curitiba. 24h por dia."
 
 ---
 
@@ -99,7 +99,7 @@ Estratégia: a peça fala com **marcas e estabelecimentos**. O investidor/parcei
 
 ## 6) Texto alternativo (acessibilidade)
 
-- **Estático:** "Mulher sorrindo ao lado de um totem de recarga BreZZe, segurando um powerbank. Texto: Chegamos a Curitiba. Sua marca nas mãos de Curitiba, 24h por dia. +50 mil locações, +19 mil usuários. Oportunidade: invista no OOH Smart e no TeamWork BreZZe Brasil. QR Codes para WhatsApp e download do app. Logos de marcas que também se conectaram."
+- **Estático:** "Prédio no centro de Curitiba com mural de araucária e a frase I ♥ Curitiba. Texto: Chegamos a Curitiba. Sua marca nas mãos da Grande Curitiba, 24h por dia. +50 mil locações, +19 mil usuários. Oportunidade: invista no OOH Smart e no TeamWork BreZZe Brasil. QR Codes para WhatsApp e download do app. Logos de marcas que também se conectaram."
 - **Vídeo:** "Vídeo de 28 segundos apresentando a chegada da BreZZe Brasil a Curitiba: powerbanks compartilhados com mídia e QR Code estratégico, números da operação, marcas parceiras e convite para ser parceiro."
 
 ## 7) Primeiro comentário (fixar)
