@@ -64,7 +64,7 @@ function logosHTML(h) { return LOGOS.map(l => logoItem(l, h)).join(''); }
 const QR = { wa: 'img/qr_wa.png', app: 'img/qr_app.png' };
 // One official QR card. WA QR is dense, so its card is 1.3x larger to stay scannable.
 function qrCard(kind, w, cls = '', extra = '', pos = '') {
-  const ww = kind === 'wa' ? w * 1.3 : w, lab = Math.max(11, w * 0.115);
+  const ww = kind === 'wa' ? Math.max(w * 1.3, Math.min(W, H) * 0.19) : w, lab = Math.max(11, w * 0.115);  // WA floor: 19% keeps the dense code scannable
   const label = kind === 'wa' ? 'Fale conosco<br>WhatsApp' : 'Baixe o<br>app';
   return `<div class="qrcard ${cls}" ${extra} style="width:${ww}px;padding:${ww*0.07}px;${pos}"><img src="${QR[kind]}"><small style="font-size:${lab}px">${label}</small></div>`;
 }
