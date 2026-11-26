@@ -34,69 +34,36 @@ const u = Math.min(W, H) / 100;
 const V = F === '9x16', L = F === '16x9';
 const s = (a, b, c) => V ? a : (L ? c : b);           // pick by format: (vertical, square, landscape)
 const T = 30;                                          // duration (s)
-const OFF = 4.0, K = 26 / 28;                          // hook lasts OFF s; the original 28 s timeline is compressed by K after it
+const OFF = 4.0, K = 22.5 / 28, D = 3.5;               // hook lasts OFF s; original 28 s timeline compressed by K; D = 'Como funciona' scene inserted before scene 4
 let h = '';
 
 
-// ---------- HOOK (0–4.25): 2% battery stress ----------
-const PW = u * s(54, 34, 36), PH = PW * 2.05;
-const phoneXY = L ? [W * 0.6, (H - PH) / 2] : (V ? [(W - PW) / 2, u * 46] : [(W - PW) / 2, u * 25]);
-const capBox = L ? `left:${u*10}px;top:0;bottom:0;width:${u*88}px;display:flex;flex-direction:column;justify-content:center`
-                 : `left:${u*6}px;right:${u*6}px;top:${u*s(16,5,0)}px;height:${u*s(26,18,0)}px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center`;
-const statusBar = (dark, pct) => `<div style="display:flex;justify-content:space-between;align-items:center;height:calc(var(--p)*10);padding:0 calc(var(--p)*7);font-weight:700;font-size:calc(var(--p)*4.6);color:${dark?'#fff':'#111'}">
-  <span>18:42</span><span class="hpct" style="display:flex;align-items:center;gap:calc(var(--p)*1.4);color:#FF3B30">${pct}
-  <svg viewBox="0 0 26 12" style="width:calc(var(--p)*7)"><rect x="1" y="1" width="21" height="10" rx="2.5" fill="none" stroke="${dark?'#fff':'#111'}" stroke-width="1.4"/><rect x="23" y="4" width="2" height="4" rx="1" fill="${dark?'#fff':'#111'}"/><rect x="2.6" y="2.6" width="1.6" height="6.8" rx=".8" fill="#FF3B30"/></svg></span></div>`;
-const alertCard = (title, msg) => `<div class="halert" style="position:absolute;inset:0;background:rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;opacity:0">
-  <div class="hcard" style="width:calc(var(--p)*80);background:#fff;border-radius:calc(var(--p)*5);padding:calc(var(--p)*5.5) calc(var(--p)*5);text-align:center;color:#111;box-shadow:0 calc(var(--p)*3) calc(var(--p)*10) rgba(0,0,0,.5)">
-    <svg viewBox="0 0 26 12" style="width:calc(var(--p)*16)"><rect x="1" y="1" width="21" height="10" rx="2.5" fill="none" stroke="#FF3B30" stroke-width="1.6"/><rect x="23" y="4" width="2" height="4" rx="1" fill="#FF3B30"/><rect x="2.6" y="2.6" width="1.6" height="6.8" rx=".8" fill="#FF3B30"/></svg>
-    <div style="font-weight:800;font-size:calc(var(--p)*6);margin-top:calc(var(--p)*2.4)">${title}</div>
-    <div style="font-weight:600;font-size:calc(var(--p)*4.4);margin-top:calc(var(--p)*1.6);color:#FF3B30;line-height:1.3">${msg}</div></div></div>`;
-const scr1 = `<div class="hscr" style="background:#F2F4F7">${statusBar(false,'2%')}
-  <div style="text-align:center;margin-top:calc(var(--p)*8);font-weight:800;font-size:calc(var(--p)*6.4);color:#111">Pagamento</div>
-  <div style="margin:calc(var(--p)*8) calc(var(--p)*8) 0;background:#fff;border-radius:calc(var(--p)*5);padding:calc(var(--p)*7) 0;text-align:center;box-shadow:0 calc(var(--p)*1) calc(var(--p)*4) rgba(0,0,0,.08)">
-    <div style="font-weight:600;font-size:calc(var(--p)*4.4);color:#667">Total</div>
-    <div style="font-weight:900;font-size:calc(var(--p)*12);color:#111;letter-spacing:-.02em">R$ 87,90</div></div>
-  <svg viewBox="0 0 60 60" style="display:block;margin:calc(var(--p)*12) auto 0;width:calc(var(--p)*30)" fill="none" stroke="#1E7FCB" stroke-width="3.2" stroke-linecap="round">
-    <path d="M22 18 Q30 30 22 42"/><path d="M30 12 Q42 30 30 48"/><path d="M38 6 Q54 30 38 54"/></svg>
-  <div style="text-align:center;font-weight:700;font-size:calc(var(--p)*4.8);color:#334;margin-top:calc(var(--p)*5)">Aproxime do leitor</div>
-  ${alertCard('Bateria fraca', '2% restante')}</div>`;
-const scr2 = `<div class="hscr" style="background:#0d0d0d">${statusBar(true,'1%')}
-  <div style="position:absolute;left:0;right:0;top:calc(var(--p)*16);bottom:calc(var(--p)*42);background:radial-gradient(circle at 50% 45%,#1d3b2a,#0a1410)">
-    <div style="position:absolute;inset:0;background:linear-gradient(#fff3,#fff3) 33.3% 0/1px 100% no-repeat,linear-gradient(#fff3,#fff3) 66.6% 0/1px 100% no-repeat,linear-gradient(#fff3,#fff3) 0 33.3%/100% 1px no-repeat,linear-gradient(#fff3,#fff3) 0 66.6%/100% 1px no-repeat"></div>
-    <div style="position:absolute;left:50%;top:50%;width:calc(var(--p)*56);transform:translate(-50%,-50%)" class="nodash">${CWB}</div>
-    <div style="position:absolute;left:calc(var(--p)*5);top:calc(var(--p)*5);display:flex;align-items:center;gap:calc(var(--p)*1.6);background:rgba(0,0,0,.45);border-radius:999px;padding:calc(var(--p)*1.6) calc(var(--p)*3.4);font-weight:700;font-size:calc(var(--p)*4);color:#fff">${ICON.pin.replace('<svg','<svg style="width:calc(var(--p)*4.4)"')}Jardim Botânico</div></div>
-  <div style="position:absolute;left:0;right:0;bottom:calc(var(--p)*10);display:flex;flex-direction:column;align-items:center;gap:calc(var(--p)*4)">
-    <div style="font-weight:800;font-size:calc(var(--p)*4);letter-spacing:.14em;color:#FFD60A">FOTO</div>
-    <div style="width:calc(var(--p)*19);height:calc(var(--p)*19);border-radius:50%;border:calc(var(--p)*1.6) solid #fff;box-shadow:inset 0 0 0 calc(var(--p)*1.4) #0d0d0d;background:#fff"></div></div>
-  ${alertCard('Bateria fraca', '1% · câmera desativada')}</div>`;
-const scr3 = `<div class="hscr" style="background:linear-gradient(180deg,#24344a,#0b1320)">${statusBar(true,'1%')}
-  <div style="text-align:center;margin-top:calc(var(--p)*14)">
-    <div style="width:calc(var(--p)*36);height:calc(var(--p)*36);border-radius:50%;margin:0 auto;background:linear-gradient(135deg,#3CCBF4,#2453C7);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:calc(var(--p)*15);color:#fff">M</div>
-    <div style="font-weight:800;font-size:calc(var(--p)*6);color:#fff;margin-top:calc(var(--p)*5)">Mãe</div>
-    <div style="font-weight:600;font-size:calc(var(--p)*4.2);color:#cfe3f5;margin-top:calc(var(--p)*1.4)">Chamada de vídeo · 12:47</div></div>
-  <div style="position:absolute;right:calc(var(--p)*5);top:calc(var(--p)*13);width:calc(var(--p)*22);height:calc(var(--p)*32);border-radius:calc(var(--p)*3.4);background:linear-gradient(160deg,#55657a,#2a3646);border:1px solid #fff4"></div>
-  <div style="position:absolute;left:0;right:0;bottom:calc(var(--p)*12);display:flex;justify-content:center;gap:calc(var(--p)*8)">
-    <div style="width:calc(var(--p)*15);height:calc(var(--p)*15);border-radius:50%;background:#ffffff26"></div>
-    <div style="width:calc(var(--p)*15);height:calc(var(--p)*15);border-radius:50%;background:#FF3B30;display:flex;align-items:center;justify-content:center"><svg viewBox="0 0 24 24" style="width:60%"><path d="M3 14c5-5 13-5 18 0l-2.5 2.5-3-1.6v-2.6c-2.2-.8-4.8-.8-7 0v2.6l-3 1.6z" fill="#fff"/></svg></div>
-    <div style="width:calc(var(--p)*15);height:calc(var(--p)*15);border-radius:50%;background:#ffffff26"></div></div>
-  ${alertCard('Bateria em 1%', 'A chamada será encerrada')}</div>`;
-const cap = (txt, i) => `<div class="hcap" data-i="${i}" style="position:absolute;inset:0;${capBox};opacity:0">
-   <div style="font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:#FF3B30;font-size:${u*s(3,2.4,2.4)}px">Alerta de bateria</div>
-   <div class="big" style="font-size:${u*s(8,6.6,6.4)}px;margin-top:${u*1.6}px">${txt}</div></div>`;
-h += `<div class="scene" id="hook" data-s="0" data-e="4.25" style="background:#120608">
-  <img class="hbg" src="img/ph_woman_airport.jpg" style="position:absolute;inset:-4%;width:108%;height:108%;object-fit:cover;filter:blur(${u*.7}px) saturate(.5) brightness(.55);opacity:0">
-  <img class="hbg" src="img/ph_mural_curitiba.jpg" style="position:absolute;inset:-4%;width:108%;height:108%;object-fit:cover;filter:blur(${u*.7}px) saturate(.5) brightness(.55);opacity:0">
-  <img class="hbg" src="img/ph_man_paulista.jpg" style="position:absolute;inset:-4%;width:108%;height:108%;object-fit:cover;filter:blur(${u*.7}px) saturate(.5) brightness(.55);opacity:0">
-  <div id="hred" style="position:absolute;inset:0;background:radial-gradient(ellipse at 50% 50%,rgba(255,30,30,.05) 30%,rgba(255,20,20,.75) 100%);mix-blend-mode:screen"></div>
-  <div class="abs" id="hcaps" style="inset:0">
-    ${cap('Na hora de pagar…', 0)}${cap('Na foto do Botânico…', 1)}${cap('No meio da chamada…', 2)}${cap('E agora?!', 3)}</div>
-  <div id="phone" style="position:absolute;left:${phoneXY[0]}px;top:${phoneXY[1]}px;width:${PW}px;height:${PH}px;--p:${PW/100}px;border-radius:calc(var(--p)*14);background:#0a0a0a;box-shadow:0 0 0 calc(var(--p)*1.4) #2a2a2a,0 calc(var(--p)*6) calc(var(--p)*18) rgba(0,0,0,.7)">
-    <div id="hscreen" style="position:absolute;inset:calc(var(--p)*3);border-radius:calc(var(--p)*11);overflow:hidden;background:#000">
-      ${scr1}${scr2}${scr3}
-      <div id="hoff" style="position:absolute;inset:0;background:#000;opacity:0;display:flex;align-items:center;justify-content:center">
-        <svg viewBox="0 0 60 122" style="width:calc(var(--p)*26)" fill="none"><rect x="19" y="2" width="22" height="9" rx="3.5" fill="#FF3B30"/><rect x="2" y="14" width="56" height="106" rx="11" stroke="#FF3B30" stroke-width="4"/><rect x="8" y="108" width="44" height="6" rx="3" fill="#FF3B30"/></svg></div>
-      <div id="hline" style="position:absolute;left:0;right:0;top:50%;height:2px;margin-top:-1px;background:#fff;box-shadow:0 0 12px 4px #fff;opacity:0"></div>
-    </div></div>
+// ---------- HOOK (0–4.25): real people, phone dying ----------
+const HPH = [['img/ph_metro_mulher.jpg', s('30% 50%','34% 50%','50% 40%')], ['img/ph_woman_airport.jpg', s('44% 40%','44% 40%','50% 35%')], ['img/ph_man_paulista.jpg', s('32% 45%','36% 45%','50% 40%')]];
+const notifBox = V ? `left:${u*5}px;right:${u*5}px;top:${u*7}px` : (L ? `right:${u*5}px;top:${u*5}px;width:${u*62}px` : `left:${u*6}px;right:${u*6}px;top:${u*5}px`);
+const hcapBox = L ? `left:${u*8}px;bottom:${u*9}px;width:${u*100}px` : `left:${u*6}px;right:${u*6}px;bottom:${u*s(16,9,0)}px`;
+const notif = (title, msg) => `<div class="hnot" style="position:absolute;${notifBox};display:flex;gap:${u*2}px;align-items:center;background:rgba(246,246,248,.92);backdrop-filter:blur(12px);border-radius:${u*s(3.4,2.6,2.4)}px;padding:${u*s(2.6,2,1.8)}px ${u*s(3,2.4,2.2)}px;box-shadow:0 ${u}px ${u*4}px rgba(0,0,0,.45);color:#111;transform:translateY(-160%)">
+   <div style="flex:none;width:${u*s(9,7,6.4)}px;height:${u*s(9,7,6.4)}px;border-radius:${u*s(2.2,1.7,1.5)}px;background:#FF3B30;display:flex;align-items:center;justify-content:center">
+     <svg viewBox="0 0 26 12" style="width:70%"><rect x="1" y="1" width="21" height="10" rx="2.5" fill="none" stroke="#fff" stroke-width="1.6"/><rect x="23" y="4" width="2" height="4" rx="1" fill="#fff"/><rect x="2.6" y="2.6" width="1.8" height="6.8" rx=".8" fill="#fff"/></svg></div>
+   <div style="flex:1;min-width:0"><div style="display:flex;justify-content:space-between;font-weight:600;font-size:${u*s(2.4,1.9,1.7)}px;color:#666;letter-spacing:.04em"><span>BATERIA</span><span>agora</span></div>
+     <div style="font-weight:800;font-size:${u*s(3.6,2.9,2.6)}px;margin-top:${u*.3}px">${title}</div>
+     <div style="font-weight:500;font-size:${u*s(3,2.4,2.2)}px;color:#333;margin-top:${u*.2}px">${msg}</div></div></div>`;
+const hcap = (kick, txt) => `<div class="hcap" style="position:absolute;${hcapBox};opacity:0">
+   <div style="display:inline-flex;align-items:center;gap:${u*1.2}px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:#fff;background:#FF3B30;border-radius:999px;padding:${u*.8}px ${u*2}px;font-size:${u*s(2.6,2.1,2)}px">${kick}</div>
+   <div class="big" style="font-size:${u*s(8.4,7,6.6)}px;margin-top:${u*1.6}px;text-shadow:0 ${u*.4}px ${u*2}px rgba(0,0,0,.6)">${txt}</div></div>`;
+h += `<div class="scene" id="hook" data-s="0" data-e="4.25" style="background:#000">
+  <div id="hphotos" style="position:absolute;inset:0;transform-origin:50% 50%">
+    ${HPH.map(([src, pos]) => `<img class="hph" src="${src}" style="position:absolute;inset:-3%;width:106%;height:106%;object-fit:cover;object-position:${pos};opacity:0">`).join('')}
+    <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.35) 0%,rgba(0,0,0,0) 30%,rgba(0,0,0,0) 50%,rgba(0,0,0,.75) 100%)"></div>
+  </div>
+  <div id="hred" style="position:absolute;inset:0;background:radial-gradient(ellipse at 50% 50%,rgba(255,0,0,0) 40%,rgba(255,25,25,.85) 100%)"></div>
+  <div id="hflash" style="position:absolute;inset:0;background:#ff2a2a;mix-blend-mode:overlay;opacity:0"></div>
+  ${hcap('2% de bateria', 'A caminho de um compromisso…')}${hcap('1% de bateria', 'Na hora do embarque…')}${hcap('1% de bateria', 'No meio da chamada…')}
+  ${notif('Bateria fraca', '2% restante. Conecte um carregador.')}${notif('Bateria em 1%', 'O celular vai desligar em instantes.')}${notif('Bateria em 1%', 'A chamada será encerrada.')}
+  <div id="hline" style="position:absolute;left:0;right:0;top:50%;height:3px;margin-top:-1.5px;background:#fff;box-shadow:0 0 18px 6px #fff;opacity:0"></div>
+  <div id="hend" style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;opacity:0">
+    <svg viewBox="0 0 60 122" style="width:${u*s(18,14,12)}px" fill="none"><rect x="19" y="2" width="22" height="9" rx="3.5" fill="#FF3B30"/><rect x="2" y="14" width="56" height="106" rx="11" stroke="#FF3B30" stroke-width="4"/><rect x="8" y="108" width="44" height="6" rx="3" fill="#FF3B30"/></svg>
+    <div class="big" style="font-size:${u*s(10,8,7.4)}px;margin-top:${u*3}px">E agora?!</div></div>
 </div>`;
 
 // ---------- SCENE 1 (0–4.4): hook question ----------
@@ -131,12 +98,28 @@ h += `<div class="scene" data-s="8.8" data-e="14">
   <div class="abs" style="${L?`left:${u*10}px;top:${u*14}px;width:${u*80}px`:`left:${u*8}px;right:${u*8}px;bottom:${u*s(16,8,0)}px`}">
     <div class="kicker a" data-a="up" data-t="9.1" style="font-size:${u*s(3,2.4,2.4)}px;margin-bottom:${u*3}px">Operação comprovada</div>
     <div style="display:flex;gap:${u*6}px;${V?'flex-direction:column;gap:'+u*4+'px':''}">
-      <div class="statbig a" data-a="up" data-t="9.4"><b style="font-size:${u*s(15,12,11)}px">+<span class="count" data-to="50000" data-t="9.4" data-d="1.6">0</span></b><span style="font-size:${u*s(3.8,3,2.8)}px">locações realizadas</span></div>
-      <div class="statbig a" data-a="up" data-t="10.2"><b class="accent" style="font-size:${u*s(15,12,11)}px">+<span class="count" data-to="19000" data-t="10.2" data-d="1.6">0</span></b><span style="font-size:${u*s(3.8,3,2.8)}px">usuários cadastrados</span></div>
+      <div class="statbig a" data-a="up" data-t="9.4"><b style="font-size:${u*s(15,10,11)}px">+<span class="count" data-to="50000" data-t="9.4" data-d="1.6">0</span></b><span style="font-size:${u*s(3.8,3,2.8)}px">locações realizadas</span></div>
+      <div class="statbig a" data-a="up" data-t="10.2"><b class="accent" style="font-size:${u*s(15,10,11)}px">+<span class="count" data-to="19000" data-t="10.2" data-d="1.6">0</span></b><span style="font-size:${u*s(3.8,3,2.8)}px">usuários cadastrados</span></div>
     </div>
     <div class="a" data-a="up" data-t="11.6" style="margin-top:${u*4}px;font-weight:600;font-size:${u*s(3.4,2.7,2.5)}px;line-height:1.4;opacity:.95">
       No Aeroporto de <b>Viracopos</b> e Metrô de <b>São Paulo</b> para o <b>Jardim Botânico</b>, <b>Rua 24 Horas</b>, <b>Ópera de Arame</b>...</div>
   </div></div>`;
+
+
+// ---------- STEPS: Como funciona (absolute 15.0–18.95; inserted between scenes 3 and 4) ----------
+const STEPS = ["Baixe o app", "Cadastre-se", "Retire o powerbank", "Leve a energia com você", "Devolva em até 24 horas"], SICON = ['<rect x="7" y="2" width="10" height="20" rx="2"/><path d="M12 7v7M9 11l3 3 3-3"/><path d="M10 19h4"/>','<circle cx="10" cy="8" r="4"/><path d="M3 21c0-4 3-6.5 7-6.5s7 2.5 7 6.5"/><path d="M19 7v6M16 10h6"/>','<rect x="4" y="9" width="12" height="13" rx="2"/><path d="M8 13h4"/><path d="M18 2v8M15 5l3-3 3 3"/>','<path d="M13 2 5 13h6l-1 9 9-12h-6z"/>','<path d="M20 12a8 8 0 1 1-2.3-5.6"/><path d="M20 3v5h-5"/><text x="12" y="15" font-size="7" font-weight="800" text-anchor="middle" fill="#C6FF2E" stroke="none" font-family="Montserrat">24h</text>'];
+h += `<div class="scene" data-abs="1" data-s="15.0" data-e="18.95" style="background:radial-gradient(ellipse at 50% 35%,#0E4A7A 0%,#06223D 72%)">
+  <div class="wv" style="left:-10%;width:120%;top:70%;height:26%">${waves(30,1600,400,70,2.2)}</div>
+  <div class="center" style="padding:0 ${u*7}px">
+    <div class="kicker a" data-a="up" data-t="15.15" style="font-size:${u*s(3.2,2.6,2.4)}px;color:var(--lime)">Como funciona</div>
+    <div class="big a" data-a="up" data-t="15.3" style="font-size:${u*s(7.6,6,5.6)}px;margin:${u*1.4}px 0 ${u*s(6,4,6)}px">É simples:</div>
+    <div style="display:flex;${L?'gap:'+u*3+'px;justify-content:center':'flex-direction:column;gap:'+u*s(3.4,2,0)+'px;align-items:flex-start'}">
+      ${STEPS.map((txt, i) => `<div class="a" data-a="${L?'up':'left'}" data-t="${(15.55 + i * .42).toFixed(2)}" style="display:flex;${L?'flex-direction:column;align-items:center;text-align:center;width:'+u*27+'px':'align-items:center;gap:'+u*s(3.4,2.6,0)+'px'}">
+        <div style="position:relative;flex:none;width:${u*s(14,9.5,13)}px;height:${u*s(14,9.5,13)}px;border-radius:50%;border:${u*.4}px solid var(--lime);display:flex;align-items:center;justify-content:center;box-shadow:0 0 ${u*2}px rgba(198,255,46,.35)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#C6FF2E" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:56%">${SICON[i]}</svg>
+          <div style="position:absolute;top:-${u*.8}px;left:-${u*.8}px;width:${u*s(4.6,3.4,4)}px;height:${u*s(4.6,3.4,4)}px;border-radius:50%;background:var(--lime);color:#06223D;font-weight:900;font-size:${u*s(2.6,2,2.2)}px;display:flex;align-items:center;justify-content:center">${i+1}</div></div>
+        <div style="font-weight:800;font-size:${u*s(4.6,3.5,3)}px;line-height:1.15;${L?'margin-top:'+u*2.2+'px':''}">${txt}</div></div>`).join('')}
+    </div></div></div>`;
 
 // ---------- SCENE 4 (13.8–19.6): QR code strategy ----------
 h += `<div class="scene" data-s="13.8" data-e="19.6">
@@ -188,39 +171,38 @@ h += `<div class="scene" data-s="23.2" data-e="28.5">
 
 h += `<div class="bar" id="bar"></div>`;
 stage.innerHTML = h;
-// shift the original timeline after the hook and compress it by K
-stage.querySelectorAll('[data-t],[data-s],[data-e],[data-d]').forEach(el => {
-  if (el.closest('#hook')) return;
-  for (const k of ['t', 's', 'e']) if (el.dataset[k] !== undefined) el.dataset[k] = (OFF + (+el.dataset[k]) * K).toFixed(3);
-  if (el.dataset.d !== undefined) el.dataset.d = (+el.dataset.d * K).toFixed(3);
+// shift the original timeline after the hook, compress it by K, and open a D-second gap before scene 4 for "Como funciona"
+stage.querySelectorAll('.scene').forEach(sc => {
+  if (sc.id === 'hook' || sc.dataset.abs) return;
+  const shift = +sc.dataset.s >= 13.5 ? D : 0, map = v => (OFF + v * K + shift).toFixed(3);
+  [sc, ...sc.querySelectorAll('[data-t],[data-s],[data-e],[data-d]')].forEach(el => {
+    for (const k of ['t', 's', 'e']) if (el.dataset[k] !== undefined) el.dataset[k] = map(+el.dataset[k]);
+    if (el.dataset.d !== undefined) el.dataset.d = (+el.dataset.d * K).toFixed(3);
+  });
 });
 // hook renderer: 3 vignettes (pay / photo / call), alerts, red pulse, shake, power-off
-const HK = { scr: [...document.querySelectorAll('#hook .hscr')], bg: [...document.querySelectorAll('#hook .hbg')], cap: [...document.querySelectorAll('#hook .hcap')],
-  red: document.getElementById('hred'), phone: document.getElementById('phone'), off: document.getElementById('hoff'), line: document.getElementById('hline'), screen: document.getElementById('hscreen') };
-const HSEG = [0, 1.3, 2.6, 3.55], HALERT = [0.7, 2.0, 2.95];
+const HK = { ph: [...document.querySelectorAll('#hook .hph')], cap: [...document.querySelectorAll('#hook .hcap')], not: [...document.querySelectorAll('#hook .hnot')],
+  photos: document.getElementById('hphotos'), red: document.getElementById('hred'), flash: document.getElementById('hflash'), line: document.getElementById('hline'), end: document.getElementById('hend') };
+const HSEG = [0, 1.3, 2.6, 3.55], HALERT = [0.75, 2.05, 2.95];
 function hookRender(t) {
   if (t > 4.4) return;
   const seg = t < HSEG[1] ? 0 : t < HSEG[2] ? 1 : t < HSEG[3] ? 2 : 3;
-  HK.scr.forEach((el, i) => { el.style.opacity = i === Math.min(seg, 2) && seg < 3 ? 1 : 0;
-    const al = el.querySelector('.halert'), q = Math.max(0, Math.min(1, (t - HALERT[i]) / .22));
-    al.style.opacity = q; al.querySelector('.hcard').style.transform = `scale(${.7 + .3 * q})`; });
-  HK.bg.forEach((el, i) => { el.style.opacity = i === Math.min(seg, 2) ? 1 : 0; el.style.transform = `scale(${1.04 + .06 * ((t - HSEG[Math.min(seg,2)]) / 1.3)})`; });
-  HK.cap.forEach((el, i) => { const t0 = HSEG[i], on = seg === i, q = on ? Math.min(1, (t - t0) / .18) : 0;
-    el.style.opacity = q; el.style.transform = `scale(${1.15 - .15 * q})`; });
-  // alarm pulse
-  const pulse = .35 + .65 * Math.max(0, Math.sin(t * Math.PI * 2 * 2.2));
-  HK.red.style.opacity = (seg === 3 ? .9 : .55) * pulse;
-  // shake: base tremor + kick after each alert
-  let amp = .18;
-  HALERT.forEach(a => { if (t > a && t < a + .35) amp += 1.1 * (1 - (t - a) / .35); });
-  const dx = (Math.sin(t * 91) + Math.sin(t * 57)) * amp * u * .5, dy = (Math.cos(t * 83) + Math.sin(t * 41)) * amp * u * .5, rot = Math.sin(t * 37) * amp * .6;
-  HK.phone.style.transform = `translate(${dx}px,${dy}px) rotate(${rot}deg)`;
-  // power off (CRT collapse) then empty battery blinking
-  const po = Math.max(0, Math.min(1, (t - 3.38) / .17));
-  HK.screen.style.transform = seg < 3 ? `scaleY(${1 - .985 * po})` : 'none';
+  let amp = .25;
+  HALERT.forEach(a => { if (t > a && t < a + .4) amp += 1.4 * (1 - (t - a) / .4); });
+  const dx = (Math.sin(t * 91) + Math.sin(t * 57)) * amp * u * .45, dy = (Math.cos(t * 83) + Math.sin(t * 41)) * amp * u * .45;
+  HK.ph.forEach((el, i) => { const on = i === seg; el.style.opacity = on ? 1 : 0;
+    if (on) { const p = (t - HSEG[i]) / (HSEG[i + 1] - HSEG[i]); el.style.transform = `translate(${dx}px,${dy}px) scale(${1.03 + .1 * p})`; el.style.filter = `saturate(${1 - .3 * p}) contrast(1.08)`; } });
+  HK.cap.forEach((el, i) => { const q = seg === i ? Math.min(1, (t - HSEG[i]) / .2) : 0; el.style.opacity = q; el.style.transform = `translateY(${(1 - q) * u * 3}px)`; });
+  HK.not.forEach((el, i) => { const p = Math.max(0, Math.min(1, (t - HALERT[i]) / .3)), k = 1 + 1.7 * Math.pow(p - 1, 3) + .7 * Math.pow(p - 1, 2);
+    const vis = seg === i && t >= HALERT[i]; el.style.transform = `translateY(${vis ? (-160 + 160 * k) : -160}%)`; });
+  const pulse = .3 + .7 * Math.max(0, Math.sin(t * Math.PI * 2 * 2.2));
+  HK.red.style.opacity = (seg === 3 ? .95 : .6) * pulse;
+  HK.flash.style.opacity = HALERT.some(a => t > a && t < a + .12) ? .55 : 0;
+  const po = Math.max(0, Math.min(1, (t - 3.36) / .17));
+  HK.photos.style.transform = seg < 3 ? `scaleY(${1 - .995 * po})` : 'scaleY(0)';
   HK.line.style.opacity = (t > 3.42 && t < 3.6) ? 1 : 0;
-  HK.off.style.opacity = seg === 3 ? 1 : 0;
-  HK.off.querySelector('svg').style.opacity = seg === 3 ? (Math.sin(t * Math.PI * 2 * 3) > 0 ? 1 : .15) : 0;
+  HK.end.style.opacity = seg === 3 ? 1 : 0;
+  HK.end.querySelector('svg').style.opacity = Math.sin(t * Math.PI * 2 * 3) > 0 ? 1 : .2;
 }
 
 // fit the scene-2 battery around logo + pill + tagline (measured before any transform)

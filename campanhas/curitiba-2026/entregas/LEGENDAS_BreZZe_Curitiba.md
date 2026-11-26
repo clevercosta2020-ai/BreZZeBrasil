@@ -20,6 +20,13 @@ Estratégia: a peça fala com **marcas e estabelecimentos**. O investidor/parcei
 >
 > Para quem tem um estabelecimento, é mais gente entrando pela porta. Para quem enxerga longe, é um negócio pronto para crescer na Grande Curitiba.
 >
+> Como funciona:
+> 1️⃣ Baixe o app
+> 2️⃣ Cadastre-se
+> 3️⃣ Retire o powerbank
+> 4️⃣ Leve a energia com você
+> 5️⃣ Devolva em até 24 horas
+>
 > 🚀 OPORTUNIDADE! Invista no OOH Smart e no TeamWork BreZZe Brasil.
 > 📲 Escaneie o QR Code da imagem para falar com a gente no WhatsApp, ou baixe o app BreZZe Brasil.
 >
@@ -36,6 +43,8 @@ Estratégia: a peça fala com **marcas e estabelecimentos**. O investidor/parcei
 
 ## 2) INSTAGRAM: Reels (vídeo 9:16)
 
+> 2% de bateria… e agora? 😱🔋
+>
 > Como colocar sua marca nas mãos da população, 24h por dia? 🤔⚡
 >
 > A resposta chegou a Curitiba: **BreZZe Brasil**. 📍
@@ -43,6 +52,13 @@ Estratégia: a peça fala com **marcas e estabelecimentos**. O investidor/parcei
 > Powerbanks compartilhados + mídia OOH + QR Code estratégico = sua mensagem, seu lead form e sua experiência no lugar onde o público mais olha: o próprio celular.
 >
 > +50.000 locações | +19.000 usuários cadastrados
+>
+> Como funciona:
+> 1️⃣ Baixe o app
+> 2️⃣ Cadastre-se
+> 3️⃣ Retire o powerbank
+> 4️⃣ Leve a energia com você
+> 5️⃣ Devolva em até 24 horas
 >
 > 🚀 OPORTUNIDADE! Invista no OOH Smart e no TeamWork BreZZe Brasil.
 > 📲 Pause no final e escaneie o QR Code: WhatsApp para falar com a gente, ou download do app.
