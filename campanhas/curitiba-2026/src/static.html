@@ -39,7 +39,7 @@ if (F === '16x9') {
   add(`<img class="photo" src="img/ph_woman_kiosk.jpg" style="left:${W*.36}px;top:0;width:${W*.64}px;height:${H}px;object-position:50% 30%">`);
   add(`<div class="shade" style="background:linear-gradient(90deg,#06223D 0%,#06223D 38%,rgba(6,34,61,.82) 48%,rgba(6,34,61,.35) 64%,rgba(6,34,61,.12) 85%),linear-gradient(0deg,rgba(6,34,61,.9) 0%,rgba(6,34,61,0) 30%)"></div>`);
   add(`<div class="wv" style="left:-100px;top:${H*.52}px;width:${W*.75}px;height:${H*.35}px">${waves(30,1600,400,70,.4)}</div>`);
-  add(`<div class="cwbwrap" style="left:${u*60}px;top:${u*2.5}px;width:${u*26}px;height:${u*13.6}px">${CWB}</div>`);
+  add(`<div class="cwbwrap" style="left:${u*62}px;top:${u*3}px;width:${u*16}px;height:${u*16}px">${CWB}</div>`);
   add(`<div class="brand" style="left:${u*7}px;top:${u*6.5}px;height:${u*7.5}px;gap:${u*3}px"><img src="img/brezze_logo.png"></div>`);
   add(`<div class="abs" style="left:${u*7}px;top:${u*17}px"><span class="pill">${ICON.pin} Chegamos a Curitiba</span></div>`);
   add(`<h1 class="abs" style="left:${u*7}px;top:${u*25}px;width:${u*80}px;font-size:${u*7.4}px">Sua marca nas mãos<br>de Curitiba.<br><span class="accent">24 horas por dia.</span></h1>`);
@@ -51,7 +51,7 @@ if (F === '16x9') {
   add(`<div class="qrbox" style="right:${u*5}px;top:${u*30}px;padding:${u*3}px;border-radius:${u*3}px;background:rgba(6,34,61,.86);backdrop-filter:blur(10px);border:1px solid rgba(60,203,244,.45);box-shadow:0 ${u*2}px ${u*6}px rgba(0,0,0,.4)">
     <div style="font-weight:900;letter-spacing:.2em;text-transform:uppercase;color:var(--cyan);font-size:${u*2}px">Oportunidade!</div>
     <div style="font-weight:900;font-size:${u*4.2}px;line-height:1.05;margin-top:${u*1}px;white-space:nowrap">Invista no OOH Smart</div>
-    <div style="font-weight:600;font-size:${u*2.2}px;margin:${u*1}px 0 ${u*2.6}px;opacity:.95">Faça parte do nosso teamwork.</div>
+    <div style="font-weight:600;font-size:${u*2.2}px;margin:${u*1}px 0 ${u*2.6}px;opacity:.95">Invista no TeamWork BreZZe Brasil.</div>
     <div style="display:flex;align-items:flex-end">${qrPair(u*14,u*2.2)}</div></div>`);
   add(`<div class="strip" style="height:${u*11}px;padding:0 ${u*7}px;gap:${u*4}px"><div class="lbl" style="font-size:${u*1.5}px">Marcas que também<br>se conectaram</div><div class="logos">${logosHTML(u*3.3)}</div></div>`);
   add(`<div class="tag abs" style="left:${u*7}px;top:${u*79}px;font-size:${u*2.4}px">Leve a energia com você!</div>`);
@@ -72,7 +72,7 @@ if (F === '9x16') {
      ${qrPair(u*14.5,u*2.2)}
      <div style="margin-left:${u*4}px"><div style="font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:var(--cyan);font-size:${u*2.6}px">Oportunidade!</div>
        <div style="font-weight:900;font-size:${u*4.6}px;line-height:1.05;margin-top:${u*.6}px">Invista no<br>OOH Smart</div>
-       <div style="font-weight:600;font-size:${u*2.6}px;margin-top:${u*1}px">Faça parte do nosso teamwork.</div></div></div>`);
+       <div style="font-weight:600;font-size:${u*2.6}px;margin-top:${u*1}px">Invista no TeamWork BreZZe Brasil.</div></div></div>`);
   add(`<div class="abs" style="left:${u*5}px;right:${u*5}px;top:${H*.748}px;border-top:1px solid rgba(60,203,244,.3);border-bottom:1px solid rgba(60,203,244,.3);padding:${u*1.4}px 0">
      <div style="text-align:center;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--cyan);font-size:${u*1.8}px;margin-bottom:${u*1.2}px">Marcas que também se conectaram</div>
      <div class="logos" style="flex-wrap:wrap;justify-content:center;gap:${u*1.6}px ${u*2.6}px">${logosHTML(u*3)}</div></div>`);
@@ -92,7 +92,7 @@ if (F === '1x1' || F === '4x5') {
   add(`<div class="abs" style="left:${u*6}px;top:${u*(F==="4x5"?80:67)}px;width:${u*50}px">
      <div style="font-weight:900;letter-spacing:.18em;color:var(--cyan);font-size:${u*1.9}px">OPORTUNIDADE!</div>
      <div class="btn" style="font-size:${u*2.6}px;margin-top:${u*1.2}px">Invista no OOH Smart ${ICON.arrow}</div>
-     <div style="font-weight:600;font-size:${u*2}px;margin-top:${u*1.4}px">Faça parte do nosso teamwork.</div></div>`);
+     <div style="font-weight:600;font-size:${u*2}px;margin-top:${u*1.4}px">Invista no TeamWork BreZZe Brasil.</div></div>`);
   add(`<div class="abs" style="right:${u*5}px;top:${u*(F==="4x5"?86:63)}px;display:flex;align-items:flex-end">${qrPair(u*14,u*1.8)}</div>`);
   add(`<div class="strip" style="height:${u*11.5}px;padding:0 ${u*5}px;flex-direction:column;justify-content:center;gap:${u*1.2}px">
      <div class="logos" style="width:100%;gap:${u*1}px">${logosHTML(u*2.7)}</div></div>`);

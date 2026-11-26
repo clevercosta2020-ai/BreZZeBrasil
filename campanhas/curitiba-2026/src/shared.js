@@ -27,17 +27,24 @@ function waves(n = 26, w = 1600, h = 400, amp = 70, phase = 0) {
   return s + '</svg>';
 }
 
-// Line-art of Curitiba's Jardim Botânico greenhouse
-const CWB = `<svg viewBox="0 0 400 210" fill="none" stroke="#3CCBF4" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" class="cwb">
-<path d="M20 195 H380"/>
-<path d="M60 195 V140 Q60 112 95 112 H130 V195"/><path d="M270 195 V112 H305 Q340 112 340 140 V195"/>
-<path d="M130 195 V100 Q130 60 200 52 Q270 60 270 100 V195"/>
-<path d="M165 72 Q200 20 235 72"/><path d="M200 24 V8"/><circle cx="200" cy="30" r="5"/>
-<path d="M150 195 V95 M175 195 V80 M200 195 V60 M225 195 V80 M250 195 V95"/>
-<path d="M130 120 H270 M130 150 H270 M60 150 H130 M270 150 H340"/>
-<path d="M78 195 V125 M95 195 V115 M112 195 V115 M288 195 V115 M305 195 V115 M322 195 V125"/>
-<path d="M150 195 Q150 175 165 175 Q180 175 180 195 M220 195 Q220 175 235 175 Q250 175 250 195"/>
+// Rosácea (Jardim Botânico de Curitiba) line-art — rosette only, no building
+const CWB = (() => {
+  const P = [], N = 12;
+  const pt = (a, r, w) => { const c = Math.cos(a), s = Math.sin(a); return `${(c * r - s * w).toFixed(2)} ${(s * r + c * w).toFixed(2)}`; };
+  for (let i = 0; i < N; i++) {
+    const a = -Math.PI / 2 + i * 2 * Math.PI / N, h = a + Math.PI / N;
+    // long spoke ending in a diamond tip
+    P.push(`<path d="M${pt(a,9,0)} L${pt(a,20,3.6)} L${pt(a,30,2.2)} L${pt(a,34,4.4)} L${pt(a,40,0)} L${pt(a,34,-4.4)} L${pt(a,30,-2.2)} L${pt(a,20,-3.6)} Z"/>`);
+    // short inner spoke between long ones
+    P.push(`<path d="M${pt(h,10,0)} L${pt(h,16,2)} L${pt(h,23,0)} L${pt(h,16,-2)} Z"/>`);
+    // outer teardrop
+    P.push(`<path d="M${pt(h,42,0)} Q${pt(h,46,3.4)} ${pt(h,50,0)} Q${pt(h,46,-3.4)} ${pt(h,42,0)} Z"/>`);
+  }
+  return `<svg viewBox="-58 -58 116 116" fill="none" stroke="#3CCBF4" stroke-width="1.3" stroke-linejoin="round" stroke-linecap="round" class="cwb">
+<circle r="54"/><circle r="5.5"/><circle r="2"/>
+${P.join('')}
 </svg>`;
+})();
 
 // [type, src/text, scale, keepColor]
 const LOGOS = [
