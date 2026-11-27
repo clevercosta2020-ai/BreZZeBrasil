@@ -36,7 +36,7 @@ let html = '';
 const add = s => html += s;
 
 if (F === '16x9') {
-  add(`<img class="photo" src="img/ph_mural_curitiba.jpg" style="left:${W*.36}px;top:0;width:${W*.64}px;height:${H}px;object-position:50% 18%">`);
+  add(`<img class="photo" src="img/ig_metro.jpg" style="left:${W*.36}px;top:0;width:${W*.64}px;height:${H}px;object-position:55% 50%">`);
   add(`<div class="shade" style="background:linear-gradient(90deg,#06223D 0%,#06223D 38%,rgba(6,34,61,.82) 48%,rgba(6,34,61,.35) 64%,rgba(6,34,61,.12) 85%),linear-gradient(0deg,rgba(6,34,61,.97) 0%,rgba(6,34,61,.6) 25%,rgba(6,34,61,0) 48%)"></div>`);
   add(`<div class="wv" style="left:-100px;top:${H*.52}px;width:${W*.75}px;height:${H*.35}px">${waves(30,1600,400,70,.4)}</div>`);
   add(`<div class="cwbwrap" style="left:${u*62}px;top:${u*3}px;width:${u*16}px;height:${u*16}px">${CWB}</div>`);
@@ -56,7 +56,7 @@ if (F === '16x9') {
 }
 
 if (F === '9x16') {
-  add(`<img class="photo" src="img/ph_mural_curitiba.jpg" style="left:0;top:0;width:${W}px;height:${H*.5}px;object-position:50% 12%">`);
+  add(`<img class="photo" src="img/ig_metro.jpg" style="left:0;top:0;width:${W}px;height:${H*.5}px;object-position:50% 40%">`);
   add(`<div class="shade" style="background:linear-gradient(180deg,rgba(6,34,61,.75) 0%,rgba(6,34,61,0) 14%,rgba(6,34,61,.1) 26%,#06223D 46%)"></div>`);
   add(`<div class="wv" style="left:-80px;top:${H*.42}px;width:${W+160}px;height:${H*.2}px">${waves(30,1600,400,80,1.1)}</div>`);
   add(`<div class="brand" style="left:${u*7}px;right:${u*7}px;top:${u*10}px;height:${u*7}px"><img src="img/brezze_logo.png"></div>`);
@@ -78,7 +78,7 @@ if (F === '9x16') {
 
 if (F === '1x1' || F === '4x5') {
   const hh = H;
-  add(`<img class="photo" src="img/ph_mural_curitiba.jpg" style="left:${W*.3}px;top:0;width:${W*.7}px;height:${hh}px;object-position:50% 25%">`);
+  add(`<img class="photo" src="img/ig_metro.jpg" style="left:${W*.3}px;top:0;width:${W*.7}px;height:${hh}px;object-position:48% 50%">`);
   add(`<div class="shade" style="background:linear-gradient(90deg,#06223D 0%,#06223D 32%,rgba(6,34,61,.8) 44%,rgba(6,34,61,.3) 64%,rgba(6,34,61,.1) 85%),linear-gradient(0deg,rgba(6,34,61,.97) 0%,rgba(6,34,61,.7) 24%,rgba(6,34,61,0) 45%)"></div>`);
   add(`<div class="wv" style="left:-60px;top:${hh*.5}px;width:${W*.9}px;height:${hh*.3}px">${waves(28,1600,400,70,.4)}</div>`);
   add(`<div class="brand" style="left:${u*6}px;top:${u*6}px;height:${u*7}px"><img src="img/brezze_logo.png"></div>`);
