@@ -1,0 +1,195 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><title>BreZZe Curitiba — Vídeo Show</title>
+<link rel="stylesheet" href="common.css">
+<style>
+.lay{position:absolute;inset:0;overflow:hidden}
+#foot,#bgfoot{position:absolute;overflow:hidden}
+#inner{position:absolute}
+#inner img,#bgfoot img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+#bgfoot img{filter:blur(28px) brightness(.45) saturate(1.2);transform:scale(1.15)}
+.cover{position:absolute;left:0;right:0;backdrop-filter:blur(22px) brightness(.75);-webkit-backdrop-filter:blur(22px) brightness(.75)}
+.cap{position:absolute;left:5%;right:5%;display:flex;justify-content:center;transform:translateY(-50%)}
+.cap span{background:#fff;color:#0b0b0b;font-weight:900;border-radius:.28em;padding:.18em .45em;line-height:1.15;text-align:center;box-shadow:0 .15em .6em rgba(0,0,0,.35)}
+.kin{font-weight:900;line-height:.95;letter-spacing:-.02em;text-transform:uppercase}
+.lime{color:var(--lime)}
+.kicker{font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:var(--cyan)}
+.cy{color:var(--cyan)}
+.badge{display:inline-flex;align-items:center;justify-content:center;border-radius:50%;background:var(--lime);color:#06223D;font-weight:900}
+.chip{display:inline-flex;align-items:center;gap:.4em;background:rgba(6,34,61,.75);border:1px solid rgba(60,203,244,.6);border-radius:999px;padding:.35em .9em;font-weight:800;backdrop-filter:blur(6px)}
+.chip svg{width:1em;height:1em}
+.flash{position:absolute;inset:0;background:#fff;opacity:0;pointer-events:none}
+.redflash{position:absolute;inset:0;background:radial-gradient(ellipse,rgba(255,0,0,0) 35%,rgba(255,20,20,.8));opacity:0}
+.g{position:absolute;opacity:0;z-index:2}
+.g.under{z-index:1}
+.flash,.bar,.redflash{z-index:5}
+.logos2{display:flex;flex-wrap:wrap;justify-content:center;align-items:center}
+.logos2 .slot{display:flex;justify-content:center;align-items:center}
+.logos2 img{filter:brightness(0) invert(1);object-fit:contain}
+.logos2 .wm{font-weight:900;letter-spacing:-.02em;line-height:1}
+.bar{position:absolute;left:0;bottom:0;height:calc(var(--u)*.8);background:linear-gradient(90deg,#3CCBF4,#C6FF2E);box-shadow:0 0 calc(var(--u)*1.5) rgba(198,255,46,.6)}
+</style></head><body>
+<div id="stage"></div>
+<script src="shared.js"></script>
+<script>
+const u = Math.min(W, H) / 100, V = F === '9x16', L = F === '16x9', s = (a, b, c) => V ? a : (L ? c : b);
+const T = 30;
+const SEG = [
+ ["A1",0.0,1.2,[.50,.66]],["A2",1.2,2.4,[.39,.55]],["A3",2.4,3.0,[.22,.31]],["B1",3.0,4.2,null],
+ ["S1",4.2,5.4,null],["S2",5.4,6.6,null],["S3",6.6,7.8,[.04,.15]],["S4",7.8,9.0,null],["S5",9.0,10.2,[.53,.69]],
+ ["P1",10.2,10.8,null],["P2",10.8,11.4,[.56,.82]],["P3",11.4,12.0,null],["P4",12.0,12.6,[.83,.93]],["P5",12.6,13.2,[.21,.30]],
+ ["P6",13.2,13.8,null],["P7",13.8,14.4,[.24,.33]],["P8",14.4,15.0,[.42,.61]],["M1",19.4,21.0,null],["M2",21.0,22.4,null]
+].map(([id,a,b,cover]) => ({id,a,b,cover,n:Math.round((b-a)*30)}));
+
+// footage geometry: V full frame; 1x1 square crop of the 9:16 frame; 16:9 centered 9:16 panel over a blurred copy
+const FB = V ? [0,0,W,H] : (L ? [(W - H*9/16)/2, 0, H*9/16, H] : [0,0,W,H]);
+const IN = V ? [0,0,W,H] : (L ? [0,0,H*9/16,H] : [0,-(W*16/9 - H)/2, W, W*16/9]);
+const visY = y => V || L ? y : Math.min(.72, Math.max(.28, y));   // keep captions inside the square crop
+
+let h = '';
+if (L) h += `<div id="bgfoot" style="left:0;top:0;width:${W}px;height:${H}px"><img id="bgimg"></div>`;
+h += `<div id="foot" style="left:${FB[0]}px;top:${FB[1]}px;width:${FB[2]}px;height:${FB[3]}px">
+  <div id="inner" style="left:${IN[0]}px;top:${IN[1]}px;width:${IN[2]}px;height:${IN[3]}px"><img id="fimg">
+  ${SEG.filter(x=>x.cover).map(x=>`<div class="cover" data-seg="${x.id}" style="top:${x.cover[0]*100}%;height:${(x.cover[1]-x.cover[0])*100}%;display:none"></div>`).join('')}
+  </div></div>`;
+// in-panel unit for captions over footage
+const pu = FB[2] / 100;
+const cap = (id, txt, y, t0) => `<div class="cap g" data-a="${t0}" data-b="${SEG.find(x=>x.id===id).b}" data-k="pop" style="left:${FB[0]+FB[2]*.05}px;width:${FB[2]*.9}px;right:auto;top:${FB[1] + (IN[1] + visY(y)*IN[3])}px;font-size:${pu*s(6.4,4.6,6.4)}px"><span>${txt}</span></div>`;
+
+// ---------- HOOK 0–3 ----------
+h += cap('A1', 'POV: fazendo compras no Brás…', .58, .05);
+h += cap('A2', '…e o celular em 1%', .47, 1.25);
+h += cap('A3', '…e ainda tem que pagar e embarcar', .27, 2.45);
+h += `<div class="g" data-a="0" data-b="2.95" data-k="blink" style="left:${FB[0]+FB[2]*.5 - pu*s(14,9,14)}px;top:${FB[1]+ (V?u*8:(L?u*6:u*5))}px;width:${pu*s(28,18,28)}px;display:flex;align-items:center;gap:${pu*1.6}px;background:rgba(0,0,0,.6);border-radius:999px;padding:${pu*1.4}px ${pu*3}px">
+  <svg viewBox="0 0 26 12" style="width:${pu*s(10,7,10)}px"><rect x="1" y="1" width="21" height="10" rx="2.5" fill="none" stroke="#FF3B30" stroke-width="1.6"/><rect x="23" y="4" width="2" height="4" rx="1" fill="#FF3B30"/><rect x="2.6" y="2.6" width="1.6" height="6.8" rx=".8" fill="#FF3B30"/></svg>
+  <b style="color:#FF3B30;font-weight:900;font-size:${pu*s(6,4.4,6)}px">1%</b></div>`;
+h += `<div class="redflash" id="redf"></div>`;
+h += `<div class="g" data-a="2.72" data-b="3.0" data-k="slam" style="left:0;right:0;top:0;bottom:0;display:flex;align-items:center;justify-content:center"><div class="kin" style="font-size:${u*s(15,13,13)}px;color:#fff;text-shadow:0 0 ${u*2}px #f00,0 ${u*.5}px 0 #a00">E AGORA?!</div></div>`;
+
+// ---------- SOLUTION 3–4.2 ----------
+h += `<div class="g" data-a="3.0" data-b="4.2" data-k="slam" style="left:${FB[0]}px;width:${FB[2]}px;top:${H*s(.16,.12,.14)}px;text-align:center">
+  <div class="kin" style="font-size:${pu*s(14,9.5,14)}px;text-shadow:0 ${u*.4}px ${u*2}px rgba(0,0,0,.6)">A BreZZe</div>
+  <div class="kin lime" style="font-size:${pu*s(17,11.5,17)}px;text-shadow:0 0 ${u*2}px rgba(198,255,46,.6),0 ${u*.4}px ${u*2}px rgba(0,0,0,.6)">te salva</div></div>`;
+
+// ---------- STEPS 4.2–10.2 ----------
+const STEPS = ['Baixe o app','Cadastre-se','Retire o powerbank','Leve a energia com você','Devolva em até 24 horas'];
+STEPS.forEach((txt, i) => {
+  const a = 4.2 + i * 1.2, b = a + 1.2;
+  h += `<div class="g" data-a="${a}" data-b="${b}" data-k="slide" style="left:${FB[0]+pu*6}px;width:${FB[2]-pu*12}px;bottom:${H*s(.1,.08,.1)}px">
+    <div class="kicker" style="color:var(--lime);font-size:${pu*s(3.4,2.4,3.4)}px;margin-bottom:${pu*1.6}px;text-shadow:0 1px 6px rgba(0,0,0,.7)">Como funciona · ${i+1}/5</div>
+    <div style="display:flex;align-items:center;gap:${pu*3}px">
+      <div class="badge" style="flex:none;width:${pu*s(15,10,15)}px;height:${pu*s(15,10,15)}px;font-size:${pu*s(8,5.4,8)}px">${i+1}</div>
+      <div style="font-weight:900;font-size:${pu*s(8.4,5.8,8.4)}px;line-height:1.02;text-shadow:0 ${u*.3}px ${u*1.6}px rgba(0,0,0,.85)">${txt}</div></div></div>`;
+});
+// gradient for legibility under steps / proof
+h += `<div class="g under" data-a="4.2" data-b="15.0" data-k="hold" style="left:${FB[0]}px;width:${FB[2]}px;top:0;height:${H}px;background:linear-gradient(180deg,rgba(6,34,61,.55) 0%,rgba(6,34,61,0) 28%,rgba(6,34,61,0) 55%,rgba(6,34,61,.85) 100%)"></div>`;
+
+// ---------- PROOF 10.2–15 ----------
+const PIN = '<svg viewBox="0 0 24 24"><path d="M12 22s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12z" fill="#3CCBF4"/><circle cx="12" cy="10" r="2.6" fill="#06223D"/></svg>';
+h += `<div class="g" data-a="10.2" data-b="12.6" data-k="hold" style="left:${FB[0]}px;width:${FB[2]}px;top:${H*s(.08,.24,.08)}px;text-align:center">
+  <div class="kin" style="font-size:${pu*s(19,12,19)}px;text-shadow:0 ${u*.4}px ${u*2.4}px rgba(0,0,0,.7)">+<span class="count" data-to="50000" data-t="10.2" data-d="1.4">0</span></div>
+  <div class="kicker" style="font-size:${pu*s(4,2.8,4)}px;color:#fff;text-shadow:0 1px 8px #000">locações realizadas</div></div>`;
+h += `<div class="g" data-a="12.6" data-b="15.0" data-k="hold" style="left:${FB[0]}px;width:${FB[2]}px;top:${H*s(.08,.24,.08)}px;text-align:center">
+  <div class="kin lime" style="font-size:${pu*s(19,12,19)}px;text-shadow:0 ${u*.4}px ${u*2.4}px rgba(0,0,0,.7)">+<span class="count" data-to="19000" data-t="12.6" data-d="1.4">0</span></div>
+  <div class="kicker" style="font-size:${pu*s(4,2.8,4)}px;color:#fff;text-shadow:0 1px 8px #000">usuários cadastrados</div></div>`;
+[[10.2,10.8,'Aeroporto de Viracopos'],[11.4,12.0,'Metrô Linha 4-Amarela'],[12.6,13.2,'Viracopos'],[14.4,15.0,'Brás · São Paulo']].forEach(([a,b,t]) =>
+  h += `<div class="g" data-a="${a}" data-b="${b}" data-k="pop" style="left:${FB[0]}px;width:${FB[2]}px;bottom:${H*s(.12,.1,.1)}px;text-align:center"><span class="chip" style="font-size:${pu*s(4.4,3,4.4)}px">${PIN}${t}</span></div>`);
+
+// ---------- CURITIBA 15–19.4 (graphic scene) ----------
+h += `<div class="g" id="cwb" data-a="15.0" data-b="19.4" data-k="scene" style="inset:0;background:#06223D">
+  <img src="img/ph_mural_curitiba.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 22%;opacity:.35" class="kbimg">
+  <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 50% 45%,rgba(14,74,122,.55),#06223D 78%)"></div>
+  <div class="g" data-a="15.15" data-b="19.4" data-k="draw" style="left:50%;top:${H*s(.2,.13,.12)}px;width:${u*s(34,26,26)}px;transform:translateX(-50%)">${CWB}</div>
+  <div class="g" data-a="15.3" data-b="19.4" data-k="batt" style="${V?`left:${(W-u*13)/2}px;top:${u*6}px`:`right:${u*6}px;top:${u*6}px`};width:${u*13}px">${battSVG(0,'glow',true)}</div>
+  <div class="g" data-a="15.7" data-b="19.4" data-k="slam" style="left:0;right:0;top:${H*s(.42,.43,.42)}px;text-align:center">
+    <div class="kin" style="font-size:${u*s(9,7,6.6)}px">Chegamos a</div>
+    <div class="kin lime" style="font-size:${u*s(18,15,14)}px;text-shadow:0 0 ${u*3}px rgba(198,255,46,.45)">Curitiba</div></div>
+  <div class="g" data-a="16.6" data-b="19.4" data-k="pop" style="left:0;right:0;top:${H*s(.64,.73,.73)}px;text-align:center"><img src="img/brezze_logo.png" style="height:${u*s(8,6.5,6.5)}px"></div>
+  <div class="g" data-a="17.2" data-b="19.4" data-k="slide" style="left:${u*6}px;right:${u*6}px;top:${H*s(.73,.84,.86)}px;text-align:center;font-weight:700;font-size:${u*s(3.6,2.8,2.6)}px;opacity:.95">Do Aeroporto de Viracopos e do Metrô de SP para o Jardim Botânico, a Rua 24 Horas, a Ópera de Arame…</div>
+</div>`;
+
+// ---------- MEDIA 19.4–22.4 ----------
+h += `<div class="g under" data-a="19.4" data-b="22.4" data-k="hold" style="left:${FB[0]}px;width:${FB[2]}px;top:0;height:${H}px;background:linear-gradient(180deg,rgba(6,34,61,.8) 0%,rgba(6,34,61,.1) 38%,rgba(6,34,61,.1) 60%,rgba(6,34,61,.9) 100%)"></div>`;
+h += `<div class="g" data-a="19.5" data-b="22.4" data-k="slide" style="left:${FB[0]+pu*6}px;width:${FB[2]-pu*12}px;top:${H*s(.07,.06,.07)}px">
+  <div class="kicker" style="color:var(--lime);font-size:${pu*s(3.6,2.6,3.6)}px">Mídia OOH Smart</div>
+  <div class="kin" style="font-size:${pu*s(9.6,6.8,9.6)}px;margin-top:${pu*1.4}px">Sua marca nas mãos da</div>
+  <div class="kin lime" style="font-size:${pu*s(9.6,6.8,9.6)}px">Grande Curitiba</div></div>`;
+h += `<div class="g" data-a="21.0" data-b="22.4" data-k="slide" style="left:${FB[0]+pu*6}px;width:${FB[2]-pu*12}px;bottom:${H*s(.1,.06,.08)}px">
+  <div class="kin" style="font-size:${pu*s(8,5.6,8)}px">24h por dia</div>
+  <div style="font-weight:800;font-size:${pu*s(4.4,3.2,4.4)}px;margin-top:${pu*1.6}px;line-height:1.3">QR Code estratégico: <span class="cy">sua mensagem · seu lead form · sua experiência</span></div></div>`;
+
+// ---------- PARTNERS 22.4–25 ----------
+const cols = s(2, 4, 6);
+h += `<div class="g" data-a="22.4" data-b="25.0" data-k="scene" style="inset:0;background:radial-gradient(ellipse at 50% 40%,#0E4A7A 0%,#06223D 72%)">
+  <div class="wv" style="position:absolute;left:-10%;width:120%;top:66%;height:28%;opacity:.6">${waves(30,1600,400,70,1.6)}</div>
+  <div class="center" style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 ${u*7}px;text-align:center">
+    <div class="kicker" style="font-size:${u*s(3,2.4,2.2)}px">Marcas que também se conectaram</div>
+    <div class="big" style="font-weight:900;font-size:${u*s(6.4,5.6,5)}px;margin:${u*2}px 0 ${u*5}px">ao público com a BreZZe</div>
+    <div class="logos2" style="row-gap:${u*s(5,4.4,4.4)}px;width:100%">
+      ${LOGOS.map((l, i) => `<div class="slot g2" data-t="${(22.6 + i * .09).toFixed(2)}" style="width:${100/cols}%">${logoItem(l, u * s(6.6, 4.8, 5))}</div>`).join('')}
+    </div></div></div>`;
+
+// ---------- CTA 25–30 ----------
+h += `<div class="g" data-a="25.0" data-b="30.5" data-k="scene" style="inset:0;background:#06223D">
+  <img src="img/ph_linha_turismo.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.28" class="kbimg">
+  <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(6,34,61,.6),#06223D 75%)"></div>
+  <div style="position:absolute;left:${u*7}px;right:${u*7}px;top:${H*s(.13,.08,.1)}px;text-align:${L?'left':'center'}">
+    <img class="g2" data-t="25.1" src="img/brezze_logo.png" style="height:${u*s(8,6,6.4)}px">
+    <div class="kicker g2" data-t="25.3" style="color:var(--lime);font-size:${u*s(3.6,2.8,2.8)}px;margin-top:${u*3.4}px">Oportunidade!</div>
+    <div class="kin g2" data-t="25.45" style="font-size:${u*s(10,8,7.6)}px;margin-top:${u*1.4}px">Invista no</div>
+    <div class="kin lime g2" data-t="25.6" style="font-size:${u*s(12,9.6,9)}px">OOH Smart</div>
+    <div class="g2" data-t="25.9" style="font-weight:700;font-size:${u*s(4.2,3.2,3)}px;margin-top:${u*2.4}px">Invista no <b class="cy">TeamWork BreZZe Brasil</b>.</div>
+    <div class="g2" data-t="26.3" style="font-weight:800;font-style:italic;font-size:${u*s(3.8,3,2.8)}px;margin-top:${u*2.2}px">Leve a energia com você!</div>
+  </div>
+  ${qrCorners(u*s(15.5,12.5,12), u*s(6,5,5), u*s(5,5,5), 'g2', 'data-t="26.0"', 'data-t="26.2"')}
+</div>`;
+
+h += `<div class="flash" id="flash"></div><div class="bar" id="bar"></div>`;
+stage.innerHTML = h;
+document.querySelectorAll('.cwb path,.cwb circle').forEach(p => p.style.setProperty('--len', p.getTotalLength ? p.getTotalLength() : 300));
+
+// ---------- renderer ----------
+const clamp = x => Math.max(0, Math.min(1, x)), eo = x => 1 - Math.pow(1 - x, 3);
+const eback = x => { const c = 1.7; return 1 + (c + 1) * Math.pow(x - 1, 3) + c * Math.pow(x - 1, 2); };
+const fimg = document.getElementById('fimg'), bgimg = document.getElementById('bgimg');
+const G = [...document.querySelectorAll('.g')], G2 = [...document.querySelectorAll('.g2')], counts = [...document.querySelectorAll('.count')];
+const covers = [...document.querySelectorAll('.cover')], cuts = SEG.map(x => x.a).concat([15.0, 19.4, 22.4, 25.0]);
+const fmt = n => n.toLocaleString('pt-BR');
+let curSrc = '';
+window.render = async t => {
+  const sg = SEG.find(x => t >= x.a && t < x.b);
+  document.getElementById('foot').style.visibility = sg ? 'visible' : 'hidden';
+  if (bgimg) document.getElementById('bgfoot').style.visibility = sg ? 'visible' : 'hidden';
+  if (sg) {
+    const fr = Math.min(sg.n, Math.floor((t - sg.a) * 30) + 1), src = `footage/${sg.id}/${String(fr).padStart(4, '0')}.jpg`;
+    const pt = t - sg.a, punch = 1 + .07 * (1 - eo(clamp(pt / .25)));            // zoom punch on every cut
+    document.getElementById('inner').style.transform = `scale(${punch})`;
+    if (src !== curSrc) { curSrc = src; fimg.src = src; if (bgimg) bgimg.src = src; await fimg.decode().catch(() => {}); if (bgimg) await bgimg.decode().catch(() => {}); }
+    covers.forEach(c => c.style.display = c.dataset.seg === sg.id ? 'block' : 'none');
+  }
+  // cut flash
+  const lastCut = Math.max(...cuts.filter(c => c <= t)), fl = t - lastCut;
+  document.getElementById('flash').style.opacity = (lastCut > 0 && fl < .1) ? (t >= 3 && t < 3.1 ? .9 : .25) * (1 - fl / .1) : 0;
+  // hook red pulse
+  document.getElementById('redf').style.opacity = t < 3 ? (.25 + .55 * Math.max(0, Math.sin(t * Math.PI * 2 * 2.5))) * (t > 2.4 ? 1.3 : 1) : 0;
+  G.forEach(el => {
+    const a = +el.dataset.a, b = +el.dataset.b, k = el.dataset.k;
+    const on = t >= a && t < b, p = clamp((t - a) / .3), q = eo(p);
+    if (!on) { el.style.opacity = 0; return; }
+    const out = clamp((b - t) / .15);
+    switch (k) {
+      case 'pop': el.style.opacity = Math.min(1, p * 3); el.style.transform = `translateY(-50%) scale(${.6 + .4 * eback(Math.min(1, p * 1.4))})`; if (!el.classList.contains('cap')) el.style.transform = `scale(${.6 + .4 * eback(Math.min(1, p * 1.4))})`; break;
+      case 'slam': el.style.opacity = Math.min(1, p * 4); el.style.transform = `scale(${1 + .6 * (1 - eo(clamp(p * 1.6)))})`; break;
+      case 'slide': el.style.opacity = q * out; el.style.transform = `translateX(${(1 - q) * -u * 8}px)`; break;
+      case 'blink': el.style.opacity = Math.sin(t * Math.PI * 2 * 3) > -0.3 ? 1 : .25; break;
+      case 'scene': el.style.opacity = Math.min(1, (t - a) / .2) * clamp((b - t) / .2); const im = el.querySelector('.kbimg'); if (im) im.style.transform = `scale(${1.12 - .1 * clamp((t - a) / (b - a))})`; break;
+      case 'draw': el.style.opacity = 1; el.querySelectorAll('path,circle').forEach((pth, i, all) => { const l = +pth.style.getPropertyValue('--len'); pth.style.strokeDashoffset = l * (1 - eo(clamp((t - a) / 1.8 * 1.4 - i / all.length * .4))); }); break;
+      case 'batt': { el.style.opacity = .9; const f = el.querySelector('.fill'), fh = 94 * eo(clamp((t - a) / 3)); f.setAttribute('y', (114 - fh).toFixed(1)); f.setAttribute('height', fh.toFixed(1)); break; }
+      default: el.style.opacity = Math.min(1, (t - a) / .15);
+    }
+  });
+  G2.forEach(el => { const p = clamp((t - +el.dataset.t) / .35); el.style.opacity = Math.min(1, p * 2); el.style.transform = `scale(${.7 + .3 * eback(p)})`; });
+  counts.forEach(c => { const p = eo(clamp((t - +c.dataset.t) / +c.dataset.d)); c.textContent = fmt(Math.round(+c.dataset.to * p / 100) * 100); });
+  document.getElementById('bar').style.width = (t / T * 100) + '%';
+};
+window.T = T;
+window.READY = Promise.all([document.fonts.ready, ...[...document.images].map(i => i.complete ? 1 : new Promise(r => { i.onload = i.onerror = r; }))]).then(() => render(0));
+</script></body></html>

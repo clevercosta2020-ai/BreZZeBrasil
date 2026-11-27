@@ -15,3 +15,10 @@ node render_video.js 9x16 entregas/videos/BreZZe_Curitiba_video_9x16.mp4   # ví
 Requer Node + Playwright (Chromium) e ffmpeg.
 
 **Regras da marca: ver `CLAUDE.md` na raiz do repositório** (ex.: usar somente os QR Codes oficiais).
+
+## Vídeo show (imagens reais do Instagram da BreZZe)
+- `src/show.html` + `src/footage/` (quadros dos cortes) + `tools/show_segments.json` (origem de cada corte: arquivo do export do Instagram, tempo inicial, faixa coberta por blur)
+- Trilha: `tools/music.py` (MUSIC_CFG) + `tools/show_audio.py` → `src/trilha_show.wav`
+```bash
+node render_show.js 9x16 entregas/video_show/BreZZe_Show_Curitiba_9x16.mp4
+```
